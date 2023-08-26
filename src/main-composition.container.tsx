@@ -17,9 +17,9 @@ export function MainComposition(props: MainCompositionProps) {
     return (
         <>
             <Perf position="top-right" />
-            {/* <ambientLight /> */}
-            {/* <directionalLight position={[1, 2, 3]} intensity={0.5} />
-            <directionalLight position={[-1, -1, -1]} intensity={0.5} /> */}
+            <ambientLight />
+            <directionalLight position={[1, 2, 3]} intensity={0.5} />
+            <directionalLight position={[-1, -1, -1]} intensity={0.5} />
 
             {/* <pointLight position={[10, 10, 10]} /> */}
             {/* <mesh>
@@ -27,10 +27,10 @@ export function MainComposition(props: MainCompositionProps) {
                 <meshStandardMaterial color="hotpink" />
             </mesh> */}
             <OrbitControls makeDefault />
-            {/* <Planet /> */}
+            <Planet />
             {/* <StarSphere /> */}
             {/* <PlanetRings /> */}
-            <EarthGlow />
+            {/* <EarthGlow /> */}
             <MainCam />
         </>
     );

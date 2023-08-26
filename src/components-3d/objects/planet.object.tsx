@@ -1,14 +1,26 @@
-// import { useEffect, useState } from 'react';
-// import { useSelector } from 'react-redux';
+import { useRef, useEffect, useState } from 'react';
+import { useFrame, useThree } from '@react-three/fiber';
+import { useRecoilState } from 'recoil';
+import * as THREE from 'three';
 import { useGLTF } from '@react-three/drei';
 
-// import { AppState } from '../../data/interfaces/redux/redux.interface';
+import { useInit } from '../../hooks/use-init.hook';
 
-// import s from './FILE.module.scss';
-import { useFrame } from '@react-three/fiber';
+import vertexShader from '../../shaders/vertex.glsl';
+import fragmentShader from '../../shaders/fragment.glsl';
+import planetVertexShader from '../../shaders/planet.vertex.glsl';
+import planetFragmentShader from '../../shaders/planet.fragment.glsl';
+import atmosphereVertexShader from '../../shaders/atmosphere.vertex.glsl';
+import atmosphereFragmentShader from '../../shaders/atmosphere.fragment.glsl';
+
+// import { someState } from '../data/recoil/atoms/session.atoms';
+
+interface LocalState {
+    mesh: THREE.Mesh;
+    atmosphere: THREE.Mesh;
+}
 
 export interface PlanetProps {}
-
 const defaultProps = {} as Required<PlanetProps>;
 
 /**
@@ -16,15 +28,104 @@ const defaultProps = {} as Required<PlanetProps>;
  */
 export function Planet(props: PlanetProps) {
     const {} = { ...defaultProps, ...props };
-    const planet = useGLTF('./models/my-world/my-world-1.gltf') as any;
+    const rootState = useThree();
+    // const [global, setGlobal] = useRecoilState(someState);
+    const [state, setState] = useState();
+    const localState = useRef<LocalState | undefined>(initLocalState());
 
-    useFrame((_state, delta) => {
+    const planetGltf = useGLTF('./models/my-world/my-world-1.gltf');
+
+    useInit(() => {
+        const planet = planetGltf.scene;
+        const shaderMaterial = new THREE.ShaderMaterial({
+            vertexShader: planetVertexShader,
+            fragmentShader: planetFragmentShader,
+            uniforms: {
+                objectColor: { value: new THREE.Color(1, 1, 1) }, // Replace with your object's color
+            },
+        });
+
+        // planet.traverse((child) => {
+        //     if (child instanceof THREE.Mesh) {
+        //         child.material = shaderMaterial;
+        //     }
+        // });
+
+        planet.traverse((child) => {
+            if (child instanceof THREE.Mesh) {
+                console.log(child);
+
+                const originalMaterial = child.material;
+                const shaderMaterial = new THREE.ShaderMaterial({
+                    vertexShader: planetVertexShader,
+                    fragmentShader: planetFragmentShader,
+                    uniforms: {
+                        objectColor: { value: new THREE.Color(1, 1, 1) }, // Default value
+                        objectTexture: { value: null }, // Default value
+                    },
+                    // blending: THREE.AdditiveBlending,
+                    // side: THREE.BackSide,
+                });
+                // If the original material has a color, pass it to the shader
+                if (originalMaterial && originalMaterial.color) {
+                    shaderMaterial.uniforms.objectColor.value = originalMaterial.color;
+                }
+
+                // If the original material has a texture, pass it to the shader
+                if (originalMaterial && originalMaterial.map) {
+                    shaderMaterial.uniforms.objectTexture.value = originalMaterial.map;
+                }
+
+                child.material = shaderMaterial;
+            }
+        });
+
+        rootState.scene.add(planet);
+    });
+
+    useFrame((state, delta) => {
         // planet.scene.rotation.y += delta * 0.03;
     });
 
-    // const SOMETHING = useSelector((state: AppState) => state.session.SOMETHING);
+    return null;
+    // return (
+    //     <primitive object={planet.scene}>
+    //         <shaderMaterial
+    //             attach="material"
+    //             vertexShader={vertexShader}
+    //             fragmentShader={fragmentShader}
+    //             uniforms={{
+    //                 globeTexture: {
+    //                     value: new THREE.TextureLoader().load('/textures/earth-uv-map.jpg'),
+    //                 },
+    //             }}
+    //         />
+    //     </primitive>
+    // );
+}
 
-    // const [STATE, SETSTATE] = useState();
-
-    return <primitive object={planet.scene} />;
+function initLocalState(): LocalState {
+    return {
+        mesh: new THREE.Mesh(
+            new THREE.SphereGeometry(5, 50, 50),
+            new THREE.ShaderMaterial({
+                vertexShader,
+                fragmentShader,
+                uniforms: {
+                    globeTexture: {
+                        value: new THREE.TextureLoader().load('/textures/earth-uv-map.jpg'),
+                    },
+                },
+            })
+        ),
+        atmosphere: new THREE.Mesh(
+            new THREE.SphereGeometry(5, 50, 50),
+            new THREE.ShaderMaterial({
+                vertexShader: atmosphereVertexShader,
+                fragmentShader: atmosphereFragmentShader,
+                blending: THREE.AdditiveBlending,
+                side: THREE.BackSide,
+            })
+        ),
+    };
 }
