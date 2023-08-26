@@ -1,0 +1,21 @@
+// TODO: Add these as mixins to be used inside other SCSS classes
+
+.regular {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400; // Regular
+}
+
+.medium {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500; // Medium
+}
+
+.bold {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700; // Bold
+}
+
+.italic {
+    font-family: 'Roboto', sans-serif;
+    font-style: italic; // Italic (if you've included the italic style)
+}
