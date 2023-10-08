@@ -1,17 +1,12 @@
 import { Camera, useFrame, useThree } from '@react-three/fiber';
-import { useRef, useState } from 'react';
 import * as THREE from 'three';
-
-import { useEffectIf } from '../hooks/use-effect-if.hook';
-import { useStateRef } from './use-state-ref.hook';
-
-// interface PointCurve extends THREE.Curve<THREE.Vector3> {
-//     getPoint(t: number): THREE.Vector3;
-// }
+import { useStateObject } from './use-state-object.hook';
 
 interface MoveToProps {
+    // TODO:
     CurveClass: new (start: THREE.Vector3, end: THREE.Vector3) => THREE.Curve<THREE.Vector3>;
     nPoints?: number;
+    loopable?: boolean;
 }
 
 interface LocalState {
@@ -24,12 +19,14 @@ interface LocalState {
     duration: number;
 }
 
-let localState: LocalState | undefined;
+// let localState: LocalState | undefined;
 
+/** Move object according to a curve */
 export function useMoveTo(props: MoveToProps) {
     const rootState = useThree();
     // TODO: Change this component to use useRef instead of localState outside
     // const localState1 = useRef<LocalState | undefined>(undefined);
+    let localState = useStateObject<LocalState | undefined>(undefined);
 
     useFrame((_state, delta) => {
         if (!localState) return;
@@ -38,8 +35,13 @@ export function useMoveTo(props: MoveToProps) {
         let t = localState.accumulatedTime / localState.duration;
 
         if (t > 1) {
-            stop();
-            return;
+            if (props.loopable) {
+                localState.accumulatedTime = 0;
+                t = 0;
+            } else {
+                stop();
+                return;
+            }
         }
 
         const pos = localState.curveInstance.getPoint(t);
@@ -56,11 +58,11 @@ export function useMoveTo(props: MoveToProps) {
 
         const curveInstance = new props.CurveClass(config.start, config.end);
 
+        // DEv: Debug curve
         // const points = curveInstance.getPoints(props.nPoints ?? 10);
         // const geometry = new THREE.BufferGeometry().setFromPoints(points);
         // const material = new THREE.LineBasicMaterial({ color: 0xff0000 });
         // const line = new THREE.Line(geometry, material);
-        // // TODO: Remove older line from scene
         // rootState.scene.add(line);
 
         // const sphereGeometry = new THREE.SphereGeometry(0.3, 16, 16); // 0.05 is the radius

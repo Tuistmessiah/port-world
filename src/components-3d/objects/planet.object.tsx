@@ -1,110 +1,160 @@
 import { useRef, useEffect, useState } from 'react';
-import { useFrame, useThree } from '@react-three/fiber';
+import { RootState, useFrame, useThree } from '@react-three/fiber';
 import { useRecoilState } from 'recoil';
 import * as THREE from 'three';
 import { useGLTF } from '@react-three/drei';
 
 import { useInit } from '../../hooks/use-init.hook';
 
-import vertexShader from '../../shaders/vertex.glsl';
-import fragmentShader from '../../shaders/fragment.glsl';
-import planetVertexShader from '../../shaders/planet.vertex.glsl';
-import planetFragmentShader from '../../shaders/planet.fragment.glsl';
-import atmosphereVertexShader from '../../shaders/atmosphere.vertex.glsl';
-import atmosphereFragmentShader from '../../shaders/atmosphere.fragment.glsl';
+import vertexShader from '../../resources/shaders/vertex.glsl';
+import fragmentShader from '../../resources/shaders/fragment.glsl';
+import planetVertexShader from '../../resources/shaders/planet.vertex.glsl';
+import planetFragmentShader from '../../resources/shaders/planet.fragment.glsl';
+import atmosphereVertexShader from '../../resources/shaders/atmosphere.vertex.glsl';
+import atmosphereFragmentShader from '../../resources/shaders/atmosphere.fragment.glsl';
+
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+import { OutlinePass } from 'three/examples/jsm/postprocessing/OutlinePass.js';
+import { useKeyPressToggle } from '../../hooks/use-key-press-toggle.hook';
+import { useStateObject } from '../../hooks/use-state-object.hook';
+
+import satellite0GlbPath from '../../assets/models/kenney-space-kit/pipe_ring.glb';
+import satellite1GlbPath from '../../assets/models/kenney-space-kit/machine_barrel.glb';
 
 // import { someState } from '../data/recoil/atoms/session.atoms';
 
 interface LocalState {
     mesh: THREE.Mesh;
     atmosphere: THREE.Mesh;
+    composer: EffectComposer;
+    satellite: {
+        refs: THREE.Group[];
+        angle: number;
+    };
 }
 
 export interface PlanetProps {}
 const defaultProps = {} as Required<PlanetProps>;
 
-/**
- * DESCRIPTION
- */
 export function Planet(props: PlanetProps) {
     const {} = { ...defaultProps, ...props };
     const rootState = useThree();
     // const [global, setGlobal] = useRecoilState(someState);
-    const [state, setState] = useState();
-    const localState = useRef<LocalState | undefined>(initLocalState());
+    // TODO: have a useObject that uses a mutable useRef
+    const localState = useStateObject<LocalState>(initLocalState(rootState));
+
+    const [outlineEffect, setoutlineEffect] = useState(false);
 
     const planetGltf = useGLTF('./models/my-world/my-world-1.gltf');
+    const satellite0Gltf = useGLTF(satellite0GlbPath);
+    const satellite1Gltf = useGLTF(satellite1GlbPath);
 
     useInit(() => {
-        const planet = planetGltf.scene;
-        const shaderMaterial = new THREE.ShaderMaterial({
-            vertexShader: planetVertexShader,
-            fragmentShader: planetFragmentShader,
-            uniforms: {
-                objectColor: { value: new THREE.Color(1, 1, 1) }, // Replace with your object's color
-            },
-        });
-
-        // planet.traverse((child) => {
-        //     if (child instanceof THREE.Mesh) {
-        //         child.material = shaderMaterial;
-        //     }
-        // });
-
-        planet.traverse((child) => {
-            if (child instanceof THREE.Mesh) {
-                console.log(child);
-
-                const originalMaterial = child.material;
-                const shaderMaterial = new THREE.ShaderMaterial({
-                    vertexShader: planetVertexShader,
-                    fragmentShader: planetFragmentShader,
-                    uniforms: {
-                        objectColor: { value: new THREE.Color(1, 1, 1) }, // Default value
-                        objectTexture: { value: null }, // Default value
-                    },
-                    // blending: THREE.AdditiveBlending,
-                    // side: THREE.BackSide,
-                });
-                // If the original material has a color, pass it to the shader
-                if (originalMaterial && originalMaterial.color) {
-                    shaderMaterial.uniforms.objectColor.value = originalMaterial.color;
-                }
-
-                // If the original material has a texture, pass it to the shader
-                if (originalMaterial && originalMaterial.map) {
-                    shaderMaterial.uniforms.objectTexture.value = originalMaterial.map;
-                }
-
-                child.material = shaderMaterial;
-            }
-        });
-
-        rootState.scene.add(planet);
+        // TODO: add bloom pass
+        setupAtmosphere(rootState);
+        setupPlanetModel(planetGltf.scene, rootState);
+        setupSatellites(satellite0Gltf.scene, satellite1Gltf.scene);
+        // addBloomPass(rootState, planetGltf.scene, localState);
     });
 
     useFrame((state, delta) => {
-        // planet.scene.rotation.y += delta * 0.03;
+        // TODO: Find a way to make earth rotate but always move to the correct spot and lock cam position to it
+        // planetGltf.scene.rotation.y += delta * 0.03;
+
+        // Satellite coords
+        if (localState.satellite.refs.length === 0) return;
+        localState.satellite.angle += delta * 0.1;
+        const x0 = 14 * Math.cos(localState.satellite.angle);
+        const z0 = 14 * Math.sin(localState.satellite.angle);
+        localState.satellite.refs[0].position.set(x0, 0, z0);
+        localState.satellite.refs[0].lookAt(new THREE.Vector3(0, 0, 0));
+        localState.satellite.refs[1].position.set(-x0, x0, -z0);
+        localState.satellite.refs[1].lookAt(new THREE.Vector3(0, 0, 0));
+        // if (outlineEffect) localState.composer.render();
+    });
+
+    useKeyPressToggle('w', () => {
+        setoutlineEffect((prevstate) => !prevstate);
     });
 
     return null;
-    // return (
-    //     <primitive object={planet.scene}>
-    //         <shaderMaterial
-    //             attach="material"
-    //             vertexShader={vertexShader}
-    //             fragmentShader={fragmentShader}
-    //             uniforms={{
-    //                 globeTexture: {
-    //                     value: new THREE.TextureLoader().load('/textures/earth-uv-map.jpg'),
-    //                 },
-    //             }}
-    //         />
-    //     </primitive>
-    // );
+
+    function setupSatellites(satellite0: THREE.Group, satellite1: THREE.Group) {
+        rootState.scene.add(satellite0);
+        rootState.scene.add(satellite1);
+        localState.satellite.refs[0] = satellite0;
+        localState.satellite.refs[1] = satellite1;
+        localState.satellite.refs[0].position.set(0, 0, 0);
+        localState.satellite.refs[1].position.set(0, 0, 0);
+    }
 }
 
-function initLocalState(): LocalState {
+function addBloomPass(rootState: RootState, object: THREE.Object3D, localState: LocalState) {
+    // localState.composer.addPass(new RenderPass(rootState.scene, rootState.camera));
+    // const outlinePass = new OutlinePass(new THREE.Vector2(window.innerWidth, window.innerHeight), rootState.scene, rootState.camera);
+    // outlinePass.selectedObjects = [object]; // Replace 'yourObject' with the object you want to highlight.
+    // localState.composer.addPass(outlinePass);
+    // outlinePass.edgeStrength = 3.0; // Strength of the edges
+    // outlinePass.edgeGlow = 0.7; // Amount of glow effect
+    // outlinePass.edgeThickness = 2.0; // Thickness of the edge
+    // outlinePass.pulsePeriod = 2; // Pulse period for the glow, 0 means no pulse
+    // outlinePass.visibleEdgeColor.set('#ffffff'); // Color of the visible edges
+    // outlinePass.hiddenEdgeColor.set('#190a05'); // Color of the hidden edge
+}
+
+function setupAtmosphere(rootState: RootState) {
+    const atmosphere = new THREE.Mesh(
+        new THREE.SphereGeometry(13, 50, 50),
+        new THREE.ShaderMaterial({
+            vertexShader: atmosphereVertexShader,
+            fragmentShader: atmosphereFragmentShader,
+            blending: THREE.AdditiveBlending,
+            side: THREE.BackSide,
+        })
+    );
+    rootState.scene.add(atmosphere);
+}
+
+function setupPlanetModel(planet: THREE.Group, rootState: RootState) {
+    planet.traverse((child) => {
+        if (child instanceof THREE.Mesh) {
+            const originalMaterial = child.material;
+            const shaderMaterial = new THREE.ShaderMaterial({
+                vertexShader: planetVertexShader,
+                fragmentShader: planetFragmentShader,
+                uniforms: {
+                    objectColor: { value: new THREE.Color(1, 1, 1) },
+                    objectTexture: { value: null },
+                    useTexture: { value: false },
+                    resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+                },
+            });
+
+            if (originalMaterial && originalMaterial.color) {
+                shaderMaterial.uniforms.objectColor.value = originalMaterial.color;
+            }
+
+            if (originalMaterial && originalMaterial.map) {
+                originalMaterial.map.wrapS = THREE.ClampToEdgeWrapping;
+                originalMaterial.map.wrapT = THREE.ClampToEdgeWrapping;
+                shaderMaterial.uniforms.objectTexture.value = originalMaterial.map;
+                shaderMaterial.uniforms.useTexture.value = true;
+            }
+
+            child.material = shaderMaterial;
+
+            window.addEventListener('resize', () => {
+                shaderMaterial.uniforms.resolution.value.set(window.innerWidth, window.innerHeight);
+            });
+        }
+    });
+    rootState.scene.add(planet);
+}
+
+function initLocalState(rootState: RootState): LocalState {
     return {
         mesh: new THREE.Mesh(
             new THREE.SphereGeometry(5, 50, 50),
@@ -127,5 +177,10 @@ function initLocalState(): LocalState {
                 side: THREE.BackSide,
             })
         ),
+        composer: new EffectComposer(rootState.gl),
+        satellite: {
+            refs: [],
+            angle: 0,
+        },
     };
 }

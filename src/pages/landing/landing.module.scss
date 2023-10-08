@@ -1,0 +1,45 @@
+.container {
+    & > section {
+        width: 20rem;
+
+        font-size: medium;
+
+        & > h1 {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+        }
+
+        & > p {
+            font-family: 'Noto Sans', sans-serif;
+            font-weight: 400;
+
+            &:first-of-type {
+                font-family: 'Noto Sans', sans-serif;
+                font-weight: 800;
+
+                margin-bottom: 1rem;
+            }
+        }
+
+        & > button {
+            margin-top: 3rem;
+            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+
+            font-size: large;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+
+            color: white;
+            background: transparent;
+
+            &:hover {
+                color: white;
+                background-color: black;
+            }
+        }
+    }
+}

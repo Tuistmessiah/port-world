@@ -1,5 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 
+/**
+ * DEV: comment what does this do
+ * @param asyncCallback
+ * @param dependencies
+ * @returns
+ */
 export function useMemoAsync(asyncCallback: () => any, dependencies: React.DependencyList | undefined): any {
     const [state, setState] = useState(null);
     const isMounted = useRef(true); // To prevent state updates on unmounted components

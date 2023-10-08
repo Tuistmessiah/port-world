@@ -1,0 +1,4 @@
+// Page height with - padding
+$g-page-padding: 2rem;
+$g-page-height-padded: calc(100vh - #{$g-page-padding});
+$g-page-width: 50vw;

@@ -7,6 +7,7 @@
         "dev": "vite",
         "start": "vite",
         "build": "tsc && vite build",
+        "deploy": "vercel --prod",
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
         "preview": "vite preview"
     },
@@ -36,6 +37,7 @@
         "sass": "^1.66.1",
         "typescript": "^5.0.2",
         "vite": "^4.4.5",
-        "vite-plugin-string": "^1.2.1"
+        "vite-plugin-string": "^1.2.1",
+        "vercel": "^32.1.0"
     }
 }

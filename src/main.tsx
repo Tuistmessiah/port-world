@@ -14,9 +14,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             <RecoilRoot>
                 <App>
                     <Routes>
-                        {endpoints().map(({ path, page }) => {
-                            return <Route path={path} element={page} />;
-                        })}
+                        {endpoints().map(({ path, page }) => (
+                            <Route path={path} element={page} />
+                        ))}
                         <Route path="/" element={<Landing />} />
                     </Routes>
                 </App>

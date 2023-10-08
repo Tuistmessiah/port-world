@@ -1,17 +1,17 @@
 // import { useEffect, useState } from 'react';
 // import { useSelector } from 'react-redux';
 
+import { StyleUtils } from '../../utils/style.utils';
+
 // import { AppState } from '../../data/interfaces/redux/redux.interface';
 
 import style from './about-me.module.scss';
+const s = StyleUtils.styleMixer(style);
 
 export interface AboutMeProps {}
 
 const defaultProps = {} as Required<AboutMeProps>;
 
-/**
- * DESCRIPTION
- */
 export function AboutMe(props: AboutMeProps) {
     const {} = { ...defaultProps, ...props };
 
@@ -20,7 +20,7 @@ export function AboutMe(props: AboutMeProps) {
     // const [STATE, SETSTATE] = useState();
 
     return (
-        <div className={style['container']}>
+        <div className={s('container', { 'some-if': true })}>
             <section>
                 <h1>🌍 My Origins</h1>
                 <p>

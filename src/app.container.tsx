@@ -1,25 +1,26 @@
-import { ReactElement, useEffect, useMemo, useState } from 'react';
+import { ReactElement, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Canvas, useThree } from '@react-three/fiber';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 
 import { threeState } from './data/recoil/atoms/scenes.atoms';
 import { pageState } from './data/recoil/atoms/session.atoms';
 
-import { useMemoAsync } from './hooks/use-memo-async.hook';
-
-import { MainComposition } from './main-composition.container';
+import { Composition } from './composition.three';
 import { AboutMe } from './pages/about-me/about-me.page';
 import { Projects } from './pages/projects/projects.page';
 import { Career } from './pages/career/career.page';
 import { Media } from './pages/media/media.page';
 
-import cx from 'classnames';
-import s from './app.module.scss';
+import { PageSlider } from './components/page-slider/page-slider.component';
+
+import style from './app.module.scss';
+import { StyleUtils } from './utils/style.utils';
+const s = StyleUtils.styleMixer(style);
 
 /** Connects Canvas to the Recoil */
 function RecoilCanvas(props: any) {
-    const [, setThreeState] = useRecoilState(threeState);
+    const setThreeState = useSetRecoilState(threeState);
 
     const rootState = useThree();
 
@@ -31,45 +32,22 @@ function RecoilCanvas(props: any) {
     return props.children;
 }
 
-let timeoutRef: NodeJS.Timeout;
-
 export function App(props: { children: ReactElement }) {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const [, setPage] = useRecoilState(pageState);
-
-    // TODO: Place this in a hook
-    /* 
-      const [isRendering, isTransitioning] = useTransition(location.pathname === '/', 1000);
-    */
-    const [isTransitioning, setIsTransitioning] = useState(false);
-    const isLandingPage = useMemoAsync(() => {
-        setPage(location.pathname as any);
-        if (location.pathname === '/') {
-            setIsTransitioning(true);
-            return new Promise((resolve) => {
-                timeoutRef = setTimeout(() => {
-                    resolve(true);
-                    setIsTransitioning(false);
-                }, 1000);
-            });
-        } else {
-            setIsTransitioning(false);
-            clearTimeout(timeoutRef);
-            return false;
-        }
-    }, [location.pathname]);
+    const setPage = useSetRecoilState(pageState);
 
     return (
-        <div className={s['container']}>
-            <nav className={cx({ [s['move-right']]: !isLandingPage })}>
-                {/* <button onClick={() => navigate('/')}>{'ladning'}</button> */}
+        <div className={s('container')}>
+            <nav>
+                <button onClick={() => navigate('/')}>{'ICON'}</button>
                 {endpoints().map(({ name, path }) => {
                     return (
                         <button
                             onClick={() => {
                                 navigate(path);
+                                setPage(path as any);
                             }}
                         >
                             {name}
@@ -77,13 +55,8 @@ export function App(props: { children: ReactElement }) {
                     );
                 })}
             </nav>
-            <section>
-                <h1>Pedro C.</h1>
-                <p>Web Developer by day. Something by night.</p>
-                <p>Portfolio webpage. Feel free to browse like a "normie" or take a change "hover" this planet. ツ</p>
-                <button>Come on down!</button>
-            </section>
-            <div className={cx(s['canvas-wrapper'], { [s['move-right']]: !isLandingPage })}>
+
+            <div className={s('canvas-wrapper')}>
                 <Canvas
                     camera={{
                         fov: 45,
@@ -93,13 +66,14 @@ export function App(props: { children: ReactElement }) {
                     }}
                 >
                     <RecoilCanvas>
-                        <MainComposition />
+                        <Composition />
                     </RecoilCanvas>
                 </Canvas>
             </div>
 
-            {!isLandingPage && <div className={cx(s['page-content'], { [s['remove-anim']]: isTransitioning })}>{props.children}</div>}
-            <div className={s['page-bg']}></div>
+            {location.pathname === '/' ? <div className={s('landing-content')}>{props.children}</div> : <PageSlider>{props.children}</PageSlider>}
+
+            <div className={s('page-bg')} />
         </div>
     );
 }
