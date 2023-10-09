@@ -1,7 +1,44 @@
 .container {
     display: block;
-}
+    padding: 1vh;
 
-.some-if {
-    // background-color: red;
+    .background {
+        height: 15rem;
+
+        border: 1px solid transparent;
+        border-radius: 10px;
+
+        background: url('https://images.unsplash.com/photo-1511207538754-e8555f2bc187?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=88672068827eaeeab540f584b883cc66&auto=format&fit=crop&w=1164&q=80');
+        background-size: cover;
+    }
+
+    .photo {
+        position: relative;
+        top: -60px;
+        height: 120px;
+        width: 120px;
+
+        margin: 0 auto;
+        border: 5px solid rgb(92, 92, 92);
+        border-radius: 50%;
+
+        background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/156905/profile/profile-512.jpg?1530296477');
+    }
+
+    .name {
+        position: relative;
+        top: -55px;
+
+        text-align: center;
+    }
+
+    .text {
+        & > h1 {
+            margin-bottom: 1rem;
+        }
+
+        & > p {
+            font-size: 1.5rem;
+        }
+    }
 }

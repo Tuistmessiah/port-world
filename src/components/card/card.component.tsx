@@ -15,26 +15,19 @@ const defaultProps = {} as Required<CardProps>;
 /**
  * DESCRIPTION
  */
-export function Card(props: CardProps) {
-    const {} = { ...defaultProps, ...props };
-
-    // const [STATE, SETSTATE] = useRecoilState(somethingState);
-    // const [STATE, SETSTATE] = useState();
-
+export function Card({ project }: any) {
     return (
-        <div className={s('container')}>
-            <div className={s('intro')}>
-                <img src={corgiImg} alt={`corgi`} />
-                <div className={s('content')}>
-                    <h2>Project 1</h2>
-                    <h3>Worked in ISTART bla bla bla</h3>
-                    <p>Description of project 1. This is a personal project showcasing my skills and achievements.</p>
-                    <a href={'value'} target="_blank">
-                        A link to
-                    </a>
-                </div>
-            </div>
-            <div className={s('carrossel')}></div>
+        <div className={s('project-card')}>
+            <img src={project.image} alt={project.title} className={s('project-image')} />
+            <h2 className={s('project-title')}>{project.title}</h2>
+            <p className={s('project-date')}>{project.date}</p>
+            <ul className={s('tech-pills')}>
+                {project.techs.map((tech: any, index: any) => (
+                    <li key={index} className={s('tech-pill')}>
+                        {tech}
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 }

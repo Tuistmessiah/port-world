@@ -20,43 +20,23 @@ export function AboutMe(props: AboutMeProps) {
     // const [STATE, SETSTATE] = useState();
 
     return (
-        <div className={s('container', { 'some-if': true })}>
+        <div className={s('container')}>
             <section>
-                <h1>🌍 My Origins</h1>
-                <p>
-                    Greetings from [Your Continent/Island Name on the 3D planet]! My name is [Your Name], and this digital realm you've landed upon reflects the universe inside my
-                    mind—a fusion of creativity, technical prowess, and passion.
-                </p>
+                <div className={s('background')} />
+                <div className={s('photo')} />
+                <h2 className={s('name')}>Pedro Caetano</h2>
             </section>
-            <section>
-                <h1>🚀 Launching My Journey</h1>
+            <section className={s('text')}>
+                <h1>About Me Island</h1>
                 <p>
-                    I embarked on my tech voyage [X years] ago. From tinkering with my first [your first notable tech experience, e.g., "coding project" or "computer game"], I
-                    realized the vast expanse of opportunities that technology offered. Each coding challenge and digital venture pushed me further into this vast universe, and I
-                    haven't looked back since.
+                    Hello! I'm a free-spirited extrovert hailing from the enchanting city of Lisbon, Portugal. Although my adventure began with Physics Engineering at [University Name], it's
+                    transcended into a kaleidoscopic journey through React and full-stack development in the vibrant world of tech. My science and math backdrop sharpens my edge, allowing me to weave
+                    through complex coding conundrums with a distinctive perspective.
                 </p>
-            </section>
-            <section>
-                <h1>🌌 Navigating My World</h1>
                 <p>
-                    I thrive on [one or two personal qualities, e.g., "innovation and persistent problem-solving"]. My mission is to merge aesthetics with functionality, creating
-                    immersive experiences that not only look spectacular but also serve a purpose. While my expertise lies in frontend development, I have ventured into the various
-                    orbits of the tech cosmos, always eager to expand my horizons.
-                </p>
-            </section>
-            <section>
-                <h1>🌠 Beyond the Screen</h1>
-                <p>
-                    When I'm not immersed in code or exploring new tech galaxies, you'll find me [one or two personal hobbies/activities, e.g., "stargazing, immersed in a sci-fi
-                    novel, or hiking up the trails"]. I believe in drawing inspiration from the world around me, both real and imagined. It's this balance between the tangible and
-                    the fantastical that fuels my creative endeavors.
-                </p>
-            </section>
-            <section>
-                <h1>🔭 Join Me in Exploration</h1>
-                <p>
-                    I invite you to journey through my world. Discover my projects, delve into my career chronicles, or enjoy the media that has marked my path. Together, let's
-                    explore the digital constellations of my universe.
+                    Beyond the screen, my easy-going nature propels me across the globe, eagerly soaking up new languages and cultures, each adventure fueling the next. Whether decrypting
+                    languages—coding or spoken—or unwinding with video games and physical pursuits, I’m always on the hunt for the next exhilarating challenge. Let's embark on a journey through the
+                    boundless realms of code and creativity together!
                 </p>
             </section>
         </div>

@@ -1,63 +1,76 @@
 @import '../../styles/imports.scss';
 
-$page-padding: $g-page-padding;
 $page-width: $g-page-width;
 
 .container {
     position: fixed;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: $page-width;
+    top: 1vh;
+    bottom: 1vh;
+    right: 1vh;
+    width: 0;
 
-    padding-right: 0.8rem;
+    border: 1px solid transparent;
+    border-radius: 10px;
 
     animation: fadeIn ease-out 0.5s forwards;
 
     color: white;
-    background-color: rgba(0, 72, 131, 1);
+    background-color: rgba(36, 36, 36, 0.95);
 
-    &.remove-anim {
-        animation: fadeOut ease-out 0.5s forwards;
+    -webkit-animation: slide 0.5s forwards;
+    -webkit-animation-delay: 0.5s;
+    animation: slide 0.5s forwards;
+    animation-delay: 0.5s;
+
+    // // Container inside scroller
+    // .scroller > div {
+    //     height: calc(100vh - #{$page-padding});
+    // }
+
+    // .scroller {
+    //     position: relative;
+    //     width: 100%;
+    //     overflow-y: scroll;
+
+    //     padding: 2rem;
+    //     padding-right: 0.5rem;
+
+    //     // Scrollbar
+    //     &::-webkit-scrollbar {
+    //         width: 10px;
+    //     }
+    //     &::-webkit-scrollbar-track {
+    //         margin-top: 1.8rem;
+
+    //         border-radius: 8px;
+    //         background-color: #e7e7e7;
+    //         border: 1px solid #cacaca;
+    //     }
+    //     &::-webkit-scrollbar-thumb {
+    //         border-radius: 8px;
+    //         background-color: #02a2ff;
+    //     }
+    //     &::-webkit-scrollbar-button:end:decrement {
+    //         height: 25%;
+    //         display: block;
+    //         background: transparent;
+    //     }
+    //     &::-webkit-scrollbar-button:end:increment {
+    //         height: 60%;
+    //         display: block;
+    //         background: transparent;
+    //     }
+    // }
+}
+
+@-webkit-keyframes slide {
+    100% {
+        width: $page-width;
     }
+}
 
-    // Container inside scroller
-    .scroller > div {
-        height: calc(100vh - #{$page-padding});
-    }
-
-    .scroller {
-        position: relative;
-        width: 100%;
-        overflow-y: scroll;
-
-        padding: 2rem;
-        padding-right: 0.5rem;
-
-        // Scrollbar
-        &::-webkit-scrollbar {
-            width: 10px;
-        }
-        &::-webkit-scrollbar-track {
-            margin-top: 1.8rem;
-
-            border-radius: 8px;
-            background-color: #e7e7e7;
-            border: 1px solid #cacaca;
-        }
-        &::-webkit-scrollbar-thumb {
-            border-radius: 8px;
-            background-color: #02a2ff;
-        }
-        &::-webkit-scrollbar-button:end:decrement {
-            height: 25%;
-            display: block;
-            background: transparent;
-        }
-        &::-webkit-scrollbar-button:end:increment {
-            height: 60%;
-            display: block;
-            background: transparent;
-        }
+@keyframes slide {
+    100% {
+        width: $page-width;
     }
 }
