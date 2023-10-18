@@ -49,6 +49,7 @@ export function App(props: { children: ReactElement }) {
                                 navigate(path);
                                 setPage(path as any);
                             }}
+                            key={name}
                         >
                             {name}
                         </button>

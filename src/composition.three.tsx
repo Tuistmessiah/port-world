@@ -29,7 +29,7 @@ export function Composition(props: CompositionProps) {
             </mesh> */}
             <OrbitControls makeDefault />
             <Planet />
-            <Moon />
+            {/* <Moon /> */}
             <StarSphere />
             {/* <PlanetRings /> */}
             {/* <EarthGlow /> */}

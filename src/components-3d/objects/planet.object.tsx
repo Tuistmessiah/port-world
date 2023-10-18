@@ -24,7 +24,7 @@ import { useStateObject } from '../../hooks/use-state-object.hook';
 import satellite0GlbPath from '../../assets/models/kenney-space-kit/pipe_ring.glb';
 import satellite1GlbPath from '../../assets/models/kenney-space-kit/machine_barrel.glb';
 
-// import { someState } from '../data/recoil/atoms/session.atoms';
+// TODO: Have threeJS components with no UI to be just functions
 
 interface LocalState {
     mesh: THREE.Mesh;
@@ -33,6 +33,41 @@ interface LocalState {
     satellite: {
         refs: THREE.Group[];
         angle: number;
+    };
+    raycaster: THREE.Raycaster;
+    pointer: THREE.Vector2;
+}
+
+function initLocalState(rootState: RootState): LocalState {
+    return {
+        mesh: new THREE.Mesh(
+            new THREE.SphereGeometry(5, 50, 50),
+            new THREE.ShaderMaterial({
+                vertexShader,
+                fragmentShader,
+                uniforms: {
+                    globeTexture: {
+                        value: new THREE.TextureLoader().load('/textures/earth-uv-map.jpg'),
+                    },
+                },
+            })
+        ),
+        atmosphere: new THREE.Mesh(
+            new THREE.SphereGeometry(5, 50, 50),
+            new THREE.ShaderMaterial({
+                vertexShader: atmosphereVertexShader,
+                fragmentShader: atmosphereFragmentShader,
+                blending: THREE.AdditiveBlending,
+                side: THREE.BackSide,
+            })
+        ),
+        composer: new EffectComposer(rootState.gl),
+        satellite: {
+            refs: [],
+            angle: 0,
+        },
+        raycaster: new THREE.Raycaster(),
+        pointer: new THREE.Vector2(),
     };
 }
 
@@ -45,19 +80,21 @@ export function Planet(props: PlanetProps) {
     // const [global, setGlobal] = useRecoilState(someState);
     // TODO: have a useObject that uses a mutable useRef
     const localState = useStateObject<LocalState>(initLocalState(rootState));
-
     const [outlineEffect, setoutlineEffect] = useState(false);
 
+    // TODO: FODA SE. Do my own useGLTF where I can get it from inside the /src folder
     const planetGltf = useGLTF('./models/my-world/my-world-1.gltf');
     const satellite0Gltf = useGLTF(satellite0GlbPath);
     const satellite1Gltf = useGLTF(satellite1GlbPath);
 
     useInit(() => {
         // TODO: add bloom pass
-        setupAtmosphere(rootState);
+        // setupAtmosphere(rootState);
         setupPlanetModel(planetGltf.scene, rootState);
         setupSatellites(satellite0Gltf.scene, satellite1Gltf.scene);
         // addBloomPass(rootState, planetGltf.scene, localState);
+
+        window.addEventListener('pointermove', onPointerMove);
     });
 
     useFrame((state, delta) => {
@@ -74,6 +111,18 @@ export function Planet(props: PlanetProps) {
         localState.satellite.refs[1].position.set(-x0, x0, -z0);
         localState.satellite.refs[1].lookAt(new THREE.Vector3(0, 0, 0));
         // if (outlineEffect) localState.composer.render();
+
+        // update the picking ray with the camera and pointer position
+        // localState.raycaster.setFromCamera(localState.pointer, rootState.camera);
+
+        // // calculate objects intersecting the picking ray
+        // const intersects = localState.raycaster.intersectObjects(satellite0Gltf.scene.children);
+
+        // for (let i = 0; i < intersects.length; i++) {
+        //     console.log(intersects);
+        //     if (intersects) (intersects[i].object as any).material.color.set(0xff0000);
+        //     // (intersects[i].object as any)?.material.color.set(0xff0000);
+        // }
     });
 
     useKeyPressToggle('w', () => {
@@ -81,6 +130,11 @@ export function Planet(props: PlanetProps) {
     });
 
     return null;
+
+    function onPointerMove(event: any) {
+        localState.pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+        localState.pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    }
 
     function setupSatellites(satellite0: THREE.Group, satellite1: THREE.Group) {
         rootState.scene.add(satellite0);
@@ -152,35 +206,4 @@ function setupPlanetModel(planet: THREE.Group, rootState: RootState) {
         }
     });
     rootState.scene.add(planet);
-}
-
-function initLocalState(rootState: RootState): LocalState {
-    return {
-        mesh: new THREE.Mesh(
-            new THREE.SphereGeometry(5, 50, 50),
-            new THREE.ShaderMaterial({
-                vertexShader,
-                fragmentShader,
-                uniforms: {
-                    globeTexture: {
-                        value: new THREE.TextureLoader().load('/textures/earth-uv-map.jpg'),
-                    },
-                },
-            })
-        ),
-        atmosphere: new THREE.Mesh(
-            new THREE.SphereGeometry(5, 50, 50),
-            new THREE.ShaderMaterial({
-                vertexShader: atmosphereVertexShader,
-                fragmentShader: atmosphereFragmentShader,
-                blending: THREE.AdditiveBlending,
-                side: THREE.BackSide,
-            })
-        ),
-        composer: new EffectComposer(rootState.gl),
-        satellite: {
-            refs: [],
-            angle: 0,
-        },
-    };
 }

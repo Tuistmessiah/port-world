@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Niramit:300,300i,700');
 
-// colors
 $primary: #1d8cf8;
 $secondary: #4f537b;
 $info: #11cdef;
@@ -8,7 +7,6 @@ $success: #00bf9a;
 $warning: #ff8d72;
 $danger: #fd5d93;
 
-// timeline variables
 $body-bg: #1e1e2f;
 $timeline-before-bg: #222a42;
 $timeline-body-bg: #27293d;
@@ -17,14 +15,40 @@ $timeline-body-shadow: 1px 3px 9px rgba(0, 0, 0, 0.1);
 
 .container {
     display: block;
+    height: 100%;
     max-width: 650px;
     padding: 1vh;
 
-    p {
-        font-weight: 300;
-        line-height: 1.5;
-        font-size: 14px;
-        opacity: 0.8;
+    & > h2 {
+        height: 3rem;
+    }
+
+    .scroll-container {
+        height: calc(100% - 3rem);
+
+        overflow-x: auto;
+
+        // Scrollbar
+        &::-webkit-scrollbar {
+            width: 10px;
+        }
+        &::-webkit-scrollbar-track {
+            border-radius: 8px;
+            background-color: #e7e7e7;
+            border: 1px solid #cacaca;
+        }
+        &::-webkit-scrollbar-thumb {
+            border-radius: 8px;
+            background-color: #02a2ff;
+        }
+        &::-webkit-scrollbar-button:end:decrement {
+            display: block;
+            background: transparent;
+        }
+        &::-webkit-scrollbar-button:end:increment {
+            display: block;
+            background: transparent;
+        }
     }
 }
 
@@ -32,6 +56,7 @@ $timeline-body-shadow: 1px 3px 9px rgba(0, 0, 0, 0.1);
     position: relative;
     padding-left: 4rem;
     margin: 0 0 0 30px;
+    margin-right: 1rem;
     color: white;
 
     &:before {
@@ -44,13 +69,20 @@ $timeline-body-shadow: 1px 3px 9px rgba(0, 0, 0, 0.1);
         background: $timeline-body-bg;
     }
 
+    p {
+        font-weight: 300;
+        line-height: 1.5;
+        font-size: 14px;
+        opacity: 0.8;
+    }
+
     .timeline-container {
         position: relative;
         margin-bottom: 2.5rem;
 
         .timeline-icon {
             position: absolute;
-            left: -88px;
+            left: -75px;
             top: 4px;
             width: 50px;
             height: 50px;
@@ -66,10 +98,14 @@ $timeline-body-shadow: 1px 3px 9px rgba(0, 0, 0, 0.1);
                 transform: translate(-50%, -50%);
             }
 
-            img {
-                width: 100%;
-                height: 100%;
-                border-radius: 50%;
+            & > svg {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+
+                width: 80%;
+                height: 80%;
             }
         }
 
