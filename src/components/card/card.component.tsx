@@ -28,6 +28,7 @@ export function Card({ project }: any) {
                     </li>
                 ))}
             </ul>
+            <a href="https://nano-project-2.vercel.app/">Link</a>
         </div>
     );
 }

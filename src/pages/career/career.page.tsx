@@ -1,4 +1,17 @@
 import AngularSvg from '../../assets/svgs/angular-svgrepo-com.svg?react';
+import MySqlSvg from '../../assets/svgs/mysql-svgrepo-com.svg?react';
+import SushiSvg from '../../assets/svgs/sushi-svgrepo-com.svg?react';
+import WheelChairSvg from '../../assets/svgs/wheelchair-svgrepo-com.svg?react';
+import MapSvg from '../../assets/svgs/map-svgrepo-com.svg?react';
+import ReactSvg from '../../assets/svgs/react-svgrepo-com.svg?react';
+import PostgreSqlSvg from '../../assets/svgs/postgresql-svgrepo-com.svg?react';
+import TypescriptSvg from '../../assets/svgs/typescript-icon-svgrepo-com.svg?react';
+import LeafletSvg from '../../assets/svgs/leaflet-svgrepo-com.svg?react';
+import NodeSvg from '../../assets/svgs/node-js-svgrepo-com.svg?react';
+import ResearchSvg from '../../assets/svgs/research-telescope-svgrepo-com.svg?react';
+import FirebaseSvg from '../../assets/svgs/firebase-svgrepo-com.svg?react';
+import ReduxSvg from '../../assets/svgs/redux-svgrepo-com.svg?react';
+import VueSvg from '../../assets/svgs/vue-9-logo-svgrepo-com.svg?react';
 
 import { StyleUtils } from '../../utils/style.utils';
 import style from './career.module.scss';
@@ -7,103 +20,142 @@ const s = StyleUtils.styleMixer(style);
 export function Career() {
     return (
         <div className={s('container')}>
-            <h2>Career Path</h2>
             <div className={s('scroll-container')}>
                 <div className={s('timeline')}>
+                    <div className={s('timeline-container')}>
+                        <div className={s('timeline-icon')}>
+                            <ResearchSvg />
+                        </div>
+                        <div className={s('timeline-body')}>
+                            <h4 className={s('timeline-title')}>
+                                <span className={s('badge')}>Academia</span>
+                            </h4>
+                            <p>Physics Engineering - Graduation & Post Graduation</p>
+                            <p>Computer Science Subjects on C. Graphics</p>
+                            <p>Research Scholarship at ISTAR-ISCTE (Lisbon)</p>
+                            <ul className={s('tech-pills')}>
+                                {['Engineering', 'Researcher', 'OpenGL/WebGL', 'Physics/Math'].map((tech: any, index: any) => (
+                                    <li key={index} className={s('tech-pill')}>
+                                        {tech}
+                                    </li>
+                                ))}
+                            </ul>
+                            <p className={s('timeline-subtitle')}>{'< 2018'}</p>
+                        </div>
+                    </div>
                     <div className={s('timeline-container')}>
                         <div className={s('timeline-icon')}>
                             <AngularSvg />
                         </div>
                         <div className={s('timeline-body')}>
                             <h4 className={s('timeline-title')}>
-                                <span className={s('badge')}>Studies</span>
-                            </h4>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam necessitatibus numquam earum ipsa fugiat veniam suscipit, officiis repudiandae, eum recusandae neque
-                                dignissimos. Cum fugit laboriosam culpa, repellendus esse commodi deserunt.
-                            </p>
-                            <p className={s('timeline-subtitle')}>1 Hours Ago</p>
-                        </div>
-                    </div>
-                    <div className={s('timeline-container')}>
-                        <div className={s('timeline-icon')}>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 841.9 595.3">
-                                <g fill="#61DAFB">
-                                    <path d="M666.3 296.5c0-32.5-40.7-63.3-103.1-82.4 14.4-63.6 8-114.2-20.2-130.4-6.5-3.8-14.1-5.6-22.4-5.6v22.3c4.6 0 8.3.9 11.4 2.6 13.6 7.8 19.5 37.5 14.9 75.7-1.1 9.4-2.9 19.3-5.1 29.4-19.6-4.8-41-8.5-63.5-10.9-13.5-18.5-27.5-35.3-41.6-50 32.6-30.3 63.2-46.9 84-46.9V78c-27.5 0-63.5 19.6-99.9 53.6-36.4-33.8-72.4-53.2-99.9-53.2v22.3c20.7 0 51.4 16.5 84 46.6-14 14.7-28 31.4-41.3 49.9-22.6 2.4-44 6.1-63.6 11-2.3-10-4-19.7-5.2-29-4.7-38.2 1.1-67.9 14.6-75.8 3-1.8 6.9-2.6 11.5-2.6V78.5c-8.4 0-16 1.8-22.6 5.6-28.1 16.2-34.4 66.7-19.9 130.1-62.2 19.2-102.7 49.9-102.7 82.3 0 32.5 40.7 63.3 103.1 82.4-14.4 63.6-8 114.2 20.2 130.4 6.5 3.8 14.1 5.6 22.5 5.6 27.5 0 63.5-19.6 99.9-53.6 36.4 33.8 72.4 53.2 99.9 53.2 8.4 0 16-1.8 22.6-5.6 28.1-16.2 34.4-66.7 19.9-130.1 62-19.1 102.5-49.9 102.5-82.3zm-130.2-66.7c-3.7 12.9-8.3 26.2-13.5 39.5-4.1-8-8.4-16-13.1-24-4.6-8-9.5-15.8-14.4-23.4 14.2 2.1 27.9 4.7 41 7.9zm-45.8 106.5c-7.8 13.5-15.8 26.3-24.1 38.2-14.9 1.3-30 2-45.2 2-15.1 0-30.2-.7-45-1.9-8.3-11.9-16.4-24.6-24.2-38-7.6-13.1-14.5-26.4-20.8-39.8 6.2-13.4 13.2-26.8 20.7-39.9 7.8-13.5 15.8-26.3 24.1-38.2 14.9-1.3 30-2 45.2-2 15.1 0 30.2.7 45 1.9 8.3 11.9 16.4 24.6 24.2 38 7.6 13.1 14.5 26.4 20.8 39.8-6.3 13.4-13.2 26.8-20.7 39.9zm32.3-13c5.4 13.4 10 26.8 13.8 39.8-13.1 3.2-26.9 5.9-41.2 8 4.9-7.7 9.8-15.6 14.4-23.7 4.6-8 8.9-16.1 13-24.1zM421.2 430c-9.3-9.6-18.6-20.3-27.8-32 9 .4 18.2.7 27.5.7 9.4 0 18.7-.2 27.8-.7-9 11.7-18.3 22.4-27.5 32zm-74.4-58.9c-14.2-2.1-27.9-4.7-41-7.9 3.7-12.9 8.3-26.2 13.5-39.5 4.1 8 8.4 16 13.1 24 4.7 8 9.5 15.8 14.4 23.4zM420.7 163c9.3 9.6 18.6 20.3 27.8 32-9-.4-18.2-.7-27.5-.7-9.4 0-18.7.2-27.8.7 9-11.7 18.3-22.4 27.5-32zm-74 58.9c-4.9 7.7-9.8 15.6-14.4 23.7-4.6 8-8.9 16-13 24-5.4-13.4-10-26.8-13.8-39.8 13.1-3.1 26.9-5.8 41.2-7.9zm-90.5 125.2c-35.4-15.1-58.3-34.9-58.3-50.6 0-15.7 22.9-35.6 58.3-50.6 8.6-3.7 18-7 27.7-10.1 5.7 19.6 13.2 40 22.5 60.9-9.2 20.8-16.6 41.1-22.2 60.6-9.9-3.1-19.3-6.5-28-10.2zM310 490c-13.6-7.8-19.5-37.5-14.9-75.7 1.1-9.4 2.9-19.3 5.1-29.4 19.6 4.8 41 8.5 63.5 10.9 13.5 18.5 27.5 35.3 41.6 50-32.6 30.3-63.2 46.9-84 46.9-4.5-.1-8.3-1-11.3-2.7zm237.2-76.2c4.7 38.2-1.1 67.9-14.6 75.8-3 1.8-6.9 2.6-11.5 2.6-20.7 0-51.4-16.5-84-46.6 14-14.7 28-31.4 41.3-49.9 22.6-2.4 44-6.1 63.6-11 2.3 10.1 4.1 19.8 5.2 29.1zm38.5-66.7c-8.6 3.7-18 7-27.7 10.1-5.7-19.6-13.2-40-22.5-60.9 9.2-20.8 16.6-41.1 22.2-60.6 9.9 3.1 19.3 6.5 28.1 10.2 35.4 15.1 58.3 34.9 58.3 50.6-.1 15.7-23 35.6-58.4 50.6zM320.8 78.4z" />
-                                    <circle cx="420.9" cy="296.5" r="45.7" />
-                                    <path d="M520.5 78.1z" />
-                                </g>
-                            </svg>
-                        </div>
-                        <div className={s('timeline-body')}>
-                            <h4 className={s('timeline-title')}>
                                 <span className={s('badge')}>Novabase</span>
                             </h4>
                             <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam necessitatibus numquam earum ipsa fugiat veniam suscipit, officiis repudiandae, eum recusandae neque
-                                dignissimos. Cum fugit laboriosam culpa, repellendus esse commodi deserunt.
+                                As a Web Consultant for a prominent advertisement firm, I played a pivotal role in the conception and realization of their sophisticated internal back-office system.
+                                This initiative was critical to managing their multiple departments, each intertwined with intricate data streams and dependencies. My expertise was instrumental in
+                                untangling and streamlining this complex web of information, ensuring data cohesion and seamless inter-departmental interactions. By integrating advanced full-stack
+                                technologies, I engineered an intuitive and efficient user interface that significantly enhanced the company's workflow.
                             </p>
-                            <p className={s('timeline-subtitle')}>2 Hours Ago</p>
+                            <p>
+                                Collaboration was at the heart of this project, demanding extensive business analysis to capture every nuance of the firm's requirements. I closely partnered with a
+                                cross-functional team, which encompassed the CEO, departmental managers, and the development squad. Through these synergies, we achieved a holistic understanding of the
+                                organization's needs and objectives. This collaborative endeavor not only produced a system that met the company's strategic goals but also established a benchmark for
+                                organizational efficiency and user-centric design.
+                            </p>
+                            <ul className={s('tech-pills')}>
+                                <AngularSvg />
+                                <TypescriptSvg />
+
+                                <MySqlSvg />
+                                <li className={s('tech-pill')}>{'Consultant'}</li>
+                                <li className={s('tech-pill')}>{'Junior'}</li>
+                            </ul>
+                            <p className={s('timeline-subtitle')}>{'2019'}</p>
                         </div>
                     </div>
                     <div className={s('timeline-container')}>
                         <div className={s('timeline-icon')}>
-                            <i className={s('far fa-grin-tears')}></i>
+                            <SushiSvg />
                         </div>
                         <div className={s('timeline-body')}>
                             <h4 className={s('timeline-title')}>
                                 <span className={s('badge')}>Freelancing</span>
                             </h4>
                             <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam necessitatibus numquam earum ipsa fugiat veniam suscipit, officiis repudiandae, eum recusandae neque
-                                dignissimos. Cum fugit laboriosam culpa, repellendus esse commodi deserunt.
+                                During my freelancing tenure, I spearheaded a digital transformation project for a renowned sushi restaurant aiming to optimize their internal operations. Recognizing
+                                the need for a centralized system to manage their workforce and streamline backend processes, I designed and implemented a comprehensive back-office solution tailored
+                                to their specific needs. Key features of this system included a bespoke internal cart functionality, robust product editing capabilities, and a secure authentication
+                                mechanism.
                             </p>
-                            <p className={s('timeline-subtitle')}>6 Hours Ago</p>
+                            <p>
+                                Leveraging the power and flexibility of React, I ensured the system was both responsive and user-friendly. To further enhance the user experience and expedite the
+                                development timeline, I integrated a CSS template, ensuring a consistent and aesthetically pleasing interface. This project, characterized by its sophistication and
+                                functional design, greatly augmented the restaurant's operational efficiency and set a new standard for backend systems in the hospitality sector.
+                            </p>
+                            <ul className={s('tech-pills')}>
+                                <ReactSvg />
+                            </ul>
+                            <p className={s('timeline-subtitle')}>{'2020'}</p>
                         </div>
                     </div>
                     <div className={s('timeline-container')}>
                         <div className={s('timeline-icon')}>
-                            <i className={s('far fa-grimace')}></i>
+                            <WheelChairSvg />
                         </div>
                         <div className={s('timeline-body')}>
                             <h4 className={s('timeline-title')}>
                                 <span className={s('badge')}>Elanza</span>
                             </h4>
                             <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam necessitatibus numquam earum ipsa fugiat veniam suscipit, officiis repudiandae, eum recusandae neque
-                                dignissimos. Cum fugit laboriosam culpa, repellendus esse commodi deserunt.
+                                In an ambitious startup focused on streamlining the engagement of freelancing professionals within the Dutch healthcare system, I took on a significant role as a
+                                Fullstack Developer. The startup's vision was to revolutionize the way healthcare professionals connected and collaborated, and their existing React application was
+                                pivotal to this mission. Recognizing the evolving needs of the platform and the advantages of modern technologies, I spearheaded a comprehensive overhaul of the app,
+                                transitioning from React to TypeScript coupled with Hooks. This move was instrumental in enhancing the app's maintainability, scalability, and performance.
                             </p>
-                            <p className={s('timeline-subtitle')}>1 Day Ago</p>
+                            <p>
+                                Beyond the frontend, there were substantial shifts in the backend architecture. I managed the migration from Firebase to a more robust and flexible combination of
+                                GraphQL and a PostgreSQL database, ensuring data integrity, security, and optimization. My role was not limited to just frontend refinements; I played an integral part
+                                in developing an internal invoicing system that streamlined the startup's financial processes. Additionally, I designed and implemented an email generating service,
+                                automating key communications and enhancing stakeholder engagement. Through these multifaceted contributions, I substantially contributed to the startup's goal of
+                                reshaping the Dutch healthcare freelancing landscape.
+                            </p>
+                            <ul className={s('tech-pills')}>
+                                <PostgreSqlSvg />
+                                <NodeSvg />
+                                <ReduxSvg />
+                                <FirebaseSvg />
+                                <li className={s('tech-pill')}>{'Medior'}</li>
+                            </ul>
+                            <p className={s('timeline-subtitle')}>{'2021'}</p>
                         </div>
                     </div>
                     <div className={s('timeline-container')}>
                         <div className={s('timeline-icon')}>
-                            <i className={s('far fa-grin-beam-sweat')}></i>
+                            <MapSvg />
                         </div>
                         <div className={s('timeline-body')}>
                             <h4 className={s('timeline-title')}>
                                 <span className={s('badge')}>GIS Specialisten / TPG</span>
                             </h4>
                             <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam necessitatibus numquam earum ipsa fugiat veniam suscipit, officiis repudiandae, eum recusandae neque
-                                dignissimos. Cum fugit laboriosam culpa, repellendus esse commodi deserunt.
+                                In my current role, I've had the privilege of pioneering the development of a cutting-edge web map application, architected from the ground up. This application
+                                leverages the capabilities of a third-party GIS software, seamlessly integrated into a robust frontend framework composed of React, TypeScript, Redux, and LeafletJS.
+                                The technological diversity didn't end there; I also acquired hands-on experience with Angular, VueJS, and NestJS, broadening the application's reach and capability.
                             </p>
-                            <p className={s('timeline-subtitle')}>3 Days Ago</p>
-                        </div>
-                    </div>
-                    <div className={s('timeline-container')}>
-                        <div className={s('timeline-icon')}>
-                            <i className={s('far fa-grin')}></i>
-                        </div>
-                        <div className={s('timeline-body')}>
-                            <h4 className={s('timeline-title')}>
-                                <span className={s('badge')}>Info</span>
-                            </h4>
                             <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam necessitatibus numquam earum ipsa fugiat veniam suscipit, officiis repudiandae, eum recusandae neque
-                                dignissimos. Cum fugit laboriosam culpa, repellendus esse commodi deserunt.
+                                Starting with an agile team of two, we've since doubled in size, reflecting the project's growth and the increasing complexities it presented. As the team expanded, I
+                                naturally gravitated towards a leadership role, particularly concerning frontend responsibilities. I've passionately mentored and guided more junior developers,
+                                ensuring best practices, knowledge transfer, and the consistent delivery of high-quality code. While my primary focus remained on frontend development, I embraced the
+                                opportunity to delve into threejs during our endeavors with a backoffice application, further diversifying my skill set and contributing to the project's multifaceted
+                                nature.
                             </p>
-                            <p className={s('timeline-subtitle')}>4 Days Ago</p>
+                            <ul className={s('tech-pills')}>
+                                <LeafletSvg />
+                                <VueSvg />
+                                <li className={s('tech-pill')}>{'Lead Frontend'}</li>
+                            </ul>
+                            <p className={s('timeline-subtitle')}>{'2024'}</p>
                         </div>
                     </div>
                 </div>

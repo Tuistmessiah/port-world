@@ -31,7 +31,17 @@ $card-height: calc(#{$slide-height} - #{$arrow-height});
             padding: 2rem;
 
             & button {
-                // height: $arrow-height;
+                height: 3rem;
+                width: 3rem;
+
+                border-radius: 50%;
+
+                cursor: pointer;
+
+                & > svg {
+                    height: 100%;
+                    width: 100%;
+                }
             }
         }
     }

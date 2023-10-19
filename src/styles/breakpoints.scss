@@ -1,0 +1,104 @@
+/** Breakpoints - usual max values for each device
+  * These need to be in accordance with values in /utils/uiux.utils.ts
+  * Also see media queries in /index.css
+*/
+$mobile: 768px;
+$mobile-tablet: 915px; // Smaller tablets / landscape phones
+$tablet: 1280px;
+$tablet-laptop: 1440px; // Larger tablets / landscape small laptops
+$laptop: 1920px;
+$desktop: 2500px;
+$large: 10000000px;
+
+/** Breakpoint mixin
+  * @param $type - mobile, tablet, laptop, desktop, large
+  * @param $minmax - min (all width bigger and including device $type), max (all width smaller and including device $type) 
+  * @obs calling breakpoint(mobile, min) OR breakpoint(large, max) will include all devices
+  * @obs analogous JS function in static class method UiuxUtils.breakpoint(...) (/data/utils/uiux.utils.ts)
+  * @usage
+  *  "@include breakpoint(mobile, max) {
+  *     padding: 1rem;
+  *   }"
+*/
+@mixin breakpoint($type, $minmax: min) {
+    // * By width
+    @if $type == mobile and $minmax == min {
+        // width => 1px
+        @media only screen and (min-width: 1px) {
+            @content;
+        }
+    } @else if $type == mobile and $minmax == max {
+        // width <= 768px
+        @media only screen and (max-width: $mobile) {
+            @content;
+        }
+    } @else if $type == mobile-tablet and $minmax == min {
+        // width => 769px
+        @media only screen and (min-width: calc(#{$mobile} + 1px)) {
+            @content;
+        }
+    } @else if $type == mobile-tablet and $minmax == max {
+        // width <= 915px
+        @media only screen and (max-width: $mobile-tablet) {
+            @content;
+        }
+    } @else if $type == tablet and $minmax == min {
+        // width => 916px
+        @media only screen and (min-width: calc(#{$mobile-tablet} + 1px)) {
+            @content;
+        }
+    } @else if $type == tablet and $minmax == max {
+        // width <= 1280px
+        @media only screen and (max-width: $tablet) {
+            @content;
+        }
+    } @else if $type == tablet-laptop and $minmax == min {
+        // width => 1281px
+        @media only screen and (min-width: calc(#{$tablet} + 1px)) {
+            @content;
+        }
+    } @else if $type == tablet-laptop and $minmax == max {
+        // width <= 1440px
+        @media only screen and (max-width: $tablet-laptop) {
+            @content;
+        }
+    } @else if $type == laptop and $minmax == min {
+        // width => 1441px
+        @media only screen and (min-width: calc(#{$tablet-laptop} + 1px)) {
+            @content;
+        }
+    } @else if $type == laptop and $minmax == max {
+        // width <= 1920px
+        @media only screen and (max-width: $laptop) {
+            @content;
+        }
+    } @else if $type == desktop and $minmax == min {
+        // width => 1921px
+        @media only screen and (min-width: calc(#{$laptop} + 1px)) {
+            @content;
+        }
+    } @else if $type == desktop and $minmax == max {
+        // width <= 2500px
+        @media only screen and (max-width: $desktop) {
+            @content;
+        }
+    } @else if $type == large and $minmax == min {
+        // width => 2501px
+        @media only screen and (min-width: calc(#{$desktop} + 1px)) {
+            @content;
+        }
+    } @else if $type == large and $minmax == max {
+        // width <= infinity
+        @media only screen and (max-width: $large) {
+            @content;
+        }
+    }
+
+    // * Other
+    @if $type == mobile-landscape {
+        // width <= 915px AND orientation: landscape
+        @media screen and (max-width: $mobile-tablet) and (orientation: landscape) {
+            @content;
+        }
+    }
+}

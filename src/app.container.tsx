@@ -41,7 +41,14 @@ export function App(props: { children: ReactElement }) {
     return (
         <div className={s('container')}>
             <nav>
-                <button onClick={() => navigate('/')}>{'ICON'}</button>
+                <button
+                    onClick={() => {
+                        navigate('/');
+                        setPage('/');
+                    }}
+                >
+                    {'ICON'}
+                </button>
                 {endpoints().map(({ name, path }) => {
                     return (
                         <button
@@ -63,7 +70,7 @@ export function App(props: { children: ReactElement }) {
                         fov: 45,
                         near: 0.1,
                         far: 10000,
-                        position: [0, 0, -60],
+                        position: [0, 0, -20],
                     }}
                 >
                     <RecoilCanvas>

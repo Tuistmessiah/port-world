@@ -27,7 +27,6 @@ export function AboutMe(props: AboutMeProps) {
                 <h2 className={s('name')}>Pedro Caetano</h2>
             </section>
             <section className={s('text')}>
-                <h1>About Me Island</h1>
                 <p>
                     Hello! I'm a free-spirited extrovert hailing from the enchanting city of Lisbon, Portugal. Although my adventure began with Physics Engineering at [University Name], it's
                     transcended into a kaleidoscopic journey through React and full-stack development in the vibrant world of tech. My science and math backdrop sharpens my edge, allowing me to weave

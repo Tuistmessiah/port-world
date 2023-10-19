@@ -21,13 +21,12 @@ export function Composition(props: CompositionProps) {
             <ambientLight />
             <directionalLight position={[1, 2, 3]} intensity={2} />
             <directionalLight position={[-1, -1, -1]} intensity={1} />
-
             {/* <pointLight position={[10, 10, 10]} /> */}
             {/* <mesh>
                 <boxGeometry args={[1, 1, 1]} />
                 <meshStandardMaterial color="hotpink" />
             </mesh> */}
-            <OrbitControls makeDefault />
+            {/* <OrbitControls makeDefault /> */}
             <Planet />
             {/* <Moon /> */}
             <StarSphere />

@@ -1,6 +1,6 @@
 @import './styles/imports.scss';
 
-$page-padding: $g-page-padding;
+$page-padding: 2rem;
 
 .container {
     display: flex;
@@ -46,6 +46,25 @@ $page-padding: $g-page-padding;
                 color: white;
                 background-color: black;
             }
+        }
+
+        @include breakpoint(tablet, max) {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+
+            margin: calc(#{$page-padding} / 2);
+
+            & > button {
+                margin: 0.5rem;
+            }
+        }
+
+        @include breakpoint(mobile, max) {
+            // DEv
+            z-index: 2;
+            flex-direction: row;
+            margin: $page-padding;
         }
     }
 

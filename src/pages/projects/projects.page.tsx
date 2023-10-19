@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import { Card } from '../../components/card/card.component';
 
+import ArrowDownSvg from '../../assets/svgs/arrow-sm-down-svgrepo-com.svg?react';
+import ArrowUpSvg from '../../assets/svgs/arrow-sm-up-svgrepo-com.svg?react';
+import corgiImg from '../../assets/images/corgi-1.jpg';
+
 import style from './projects.module.scss';
 import { StyleUtils } from '../../utils/style.utils';
 const s = StyleUtils.styleMixer(style);
-import corgiImg from '../../assets/images/corgi-1.jpg';
 
 const projects = [
     {
@@ -44,7 +47,7 @@ export function Projects() {
                                 }}
                                 style={{ visibility: slideNumber === 0 ? 'hidden' : 'visible' }}
                             >
-                                UP
+                                <ArrowUpSvg />
                             </button>
                             <button
                                 className={s('arrow')}
@@ -54,7 +57,7 @@ export function Projects() {
                                 }}
                                 style={{ visibility: slideNumber === projects.length - 1 ? 'hidden' : 'visible' }}
                             >
-                                DOWN
+                                <ArrowDownSvg />
                             </button>
                         </div>
                     </div>

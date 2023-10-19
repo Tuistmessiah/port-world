@@ -1,13 +1,18 @@
 @import '../../styles/imports.scss';
 
-$page-width: $g-page-width;
-
 .container {
     position: fixed;
     top: 1vh;
     bottom: 1vh;
     right: 1vh;
     width: 0;
+    max-width: 40vw;
+    @include breakpoint(tablet, max) {
+        max-width: 50vw;
+    }
+    @include breakpoint(mobile, max) {
+        max-width: 98vw;
+    }
 
     border: 1px solid transparent;
     border-radius: 10px;
@@ -21,56 +26,16 @@ $page-width: $g-page-width;
     -webkit-animation-delay: 0.5s;
     animation: slide 0.5s forwards;
     animation-delay: 0.5s;
-
-    // // Container inside scroller
-    // .scroller > div {
-    //     height: calc(100vh - #{$page-padding});
-    // }
-
-    // .scroller {
-    //     position: relative;
-    //     width: 100%;
-    //     overflow-y: scroll;
-
-    //     padding: 2rem;
-    //     padding-right: 0.5rem;
-
-    //     // Scrollbar
-    //     &::-webkit-scrollbar {
-    //         width: 10px;
-    //     }
-    //     &::-webkit-scrollbar-track {
-    //         margin-top: 1.8rem;
-
-    //         border-radius: 8px;
-    //         background-color: #e7e7e7;
-    //         border: 1px solid #cacaca;
-    //     }
-    //     &::-webkit-scrollbar-thumb {
-    //         border-radius: 8px;
-    //         background-color: #02a2ff;
-    //     }
-    //     &::-webkit-scrollbar-button:end:decrement {
-    //         height: 25%;
-    //         display: block;
-    //         background: transparent;
-    //     }
-    //     &::-webkit-scrollbar-button:end:increment {
-    //         height: 60%;
-    //         display: block;
-    //         background: transparent;
-    //     }
-    // }
 }
 
 @-webkit-keyframes slide {
     100% {
-        width: $page-width;
+        width: 100vw;
     }
 }
 
 @keyframes slide {
     100% {
-        width: $page-width;
+        width: 100vw;
     }
 }
