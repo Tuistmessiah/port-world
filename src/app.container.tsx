@@ -14,6 +14,8 @@ import { Media } from './pages/media/media.page';
 
 import { PageSlider } from './components/page-slider/page-slider.component';
 
+import EarthSvg from './assets/svgs/earth-svgrepo-com.svg?react';
+
 import style from './app.module.scss';
 import { StyleUtils } from './utils/style.utils';
 const s = StyleUtils.styleMixer(style);
@@ -47,7 +49,7 @@ export function App(props: { children: ReactElement }) {
                         setPage('/');
                     }}
                 >
-                    {'ICON'}
+                    <EarthSvg />
                 </button>
                 {endpoints().map(({ name, path }) => {
                     return (

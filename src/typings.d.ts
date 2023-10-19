@@ -8,6 +8,11 @@ declare module 'three/examples/jsm/curves/CurvesExtras.js' {
     export { GrannyKnot };
 }
 
+declare module '*.JPG' {
+    const img: string;
+    export default img;
+}
+
 declare module '*.glsl' {
     const value: string;
     export default value;

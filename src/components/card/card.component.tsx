@@ -1,34 +1,43 @@
-// import { useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
-import corgiImg from '../../assets/images/corgi-1.jpg';
-
-// import { AppState } from '../../data/interfaces/redux/redux.interface';
+import { ReactNode } from 'react';
 
 import style from './card.module.scss';
 import { StyleUtils } from '../../utils/style.utils';
 const s = StyleUtils.styleMixer(style);
 
-export interface CardProps {}
+export interface CardProps {
+    imageSrc: string;
+    title: string;
+    techs: Array<string | ReactNode>;
+    date: string;
+    link: { href: string; displayName: string };
+    children?: ReactNode;
+}
 
-const defaultProps = {} as Required<CardProps>;
-
-/**
- * DESCRIPTION
- */
-export function Card({ project }: any) {
+export function Card({ imageSrc, title, techs, date, link, children }: CardProps) {
     return (
         <div className={s('project-card')}>
-            <img src={project.image} alt={project.title} className={s('project-image')} />
-            <h2 className={s('project-title')}>{project.title}</h2>
-            <p className={s('project-date')}>{project.date}</p>
-            <ul className={s('tech-pills')}>
-                {project.techs.map((tech: any, index: any) => (
-                    <li key={index} className={s('tech-pill')}>
-                        {tech}
-                    </li>
-                ))}
-            </ul>
-            <a href="https://nano-project-2.vercel.app/">Link</a>
+            <img src={imageSrc} alt={title} className={s('project-image')} />
+            <div className={s('header')}>
+                <div className={s('left')}>
+                    <h2 className={s('project-title')}>{title}</h2>
+                    <h3 className={s('project-date')}>{date}</h3>
+                </div>
+                <div className={s('right')}>
+                    <ul className={s('tech-pills')}>
+                        {techs.map((tech, index) =>
+                            typeof tech === 'string' ? (
+                                <li key={index} className={s('tech-pill')}>
+                                    {tech}
+                                </li>
+                            ) : (
+                                tech
+                            )
+                        )}
+                    </ul>
+                    <a href={link.href}>{link.displayName}</a>
+                </div>
+            </div>
+            {children && <div className={s('content')}>{children}</div>}
         </div>
     );
 }

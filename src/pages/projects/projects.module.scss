@@ -23,6 +23,19 @@ $card-height: calc(#{$slide-height} - #{$arrow-height});
         height: $slide-height;
         transition: transform 0.2s;
 
+        p {
+            color: white;
+            text-align: left;
+
+            padding: 20px 20px 15px;
+            border-radius: 3px;
+            box-shadow: 1px 3px 9px rgba(0, 0, 0, 0.1);
+
+            background: #27293d;
+
+            font-size: 1.5rem;
+        }
+
         .arrow-group {
             height: $arrow-height;
 

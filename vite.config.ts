@@ -30,5 +30,5 @@ export default defineConfig({
             },
         },
     },
-    assetsInclude: ['**/*.glb'],
+    assetsInclude: ['**/*.glb', '**/*.JPG'],
 });
