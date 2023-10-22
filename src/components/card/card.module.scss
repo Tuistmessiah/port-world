@@ -1,7 +1,14 @@
-$title-height: 4vh;
-$slide-height: calc(98vh - 2vh - #{$title-height}); // padding top+bottom => 2vh
+@import '../../styles/imports.scss';
+
+$page-height: 98vh;
+$page-height-mobile: 87vh;
+
 $arrow-height: 10vh;
+
+$slide-height: calc(#{$page-height} - 2vh); // padding top+bottom => 2vh
 $card-height: calc(#{$slide-height} - #{$arrow-height});
+$slide-height-mobile: calc(#{$page-height-mobile} - 2vh);
+$card-height-mobile: calc(#{$slide-height-mobile} - #{$arrow-height});
 
 .project-card {
     height: $card-height;
@@ -11,6 +18,10 @@ $card-height: calc(#{$slide-height} - #{$arrow-height});
     overflow: hidden;
     text-align: center;
     transition: transform 0.3s ease-in-out;
+
+    @include breakpoint(mobile, max) {
+        height: $card-height-mobile;
+    }
 
     .header {
         display: flex;

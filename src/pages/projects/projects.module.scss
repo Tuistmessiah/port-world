@@ -1,14 +1,22 @@
 @import '../../styles/imports.scss';
 
-$title-height: 4vh;
-$slide-height: calc(98vh - 2vh - #{$title-height}); // padding top+bottom => 2vh
+$page-height: 98vh;
+$page-height-mobile: 87vh;
+
+$title-height: 0;
 $arrow-height: 10vh;
-$card-height: calc(#{$slide-height} - #{$arrow-height});
+
+$slide-height: calc(#{$page-height} - 2vh); // padding top+bottom => 2vh
+$slide-height-mobile: calc(#{$page-height-mobile} - 2vh);
 
 .container {
     width: 100%;
-    height: 98vh;
+    height: $page-height;
     padding: 1vh;
+
+    @include breakpoint(mobile, max) {
+        height: $page-height-mobile;
+    }
 
     & > h1 {
         height: $title-height;
@@ -19,9 +27,17 @@ $card-height: calc(#{$slide-height} - #{$arrow-height});
     height: $slide-height;
     overflow-y: hidden;
 
+    @include breakpoint(mobile, max) {
+        height: $slide-height-mobile;
+    }
+
     .slide {
         height: $slide-height;
-        transition: transform 0.2s;
+        transition: transform 0.5s;
+
+        @include breakpoint(mobile, max) {
+            height: $slide-height-mobile;
+        }
 
         p {
             color: white;

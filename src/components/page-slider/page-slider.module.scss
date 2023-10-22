@@ -2,16 +2,21 @@
 
 .container {
     position: fixed;
+    z-index: 2;
     top: 1vh;
     bottom: 1vh;
     right: 1vh;
     width: 0;
     max-width: 40vw;
+
     @include breakpoint(tablet, max) {
         max-width: 50vw;
     }
     @include breakpoint(mobile, max) {
+        right: unset;
+        top: 12vh;
         max-width: 98vw;
+        overflow-y: auto;
     }
 
     border: 1px solid transparent;
@@ -26,6 +31,11 @@
     -webkit-animation-delay: 0.5s;
     animation: slide 0.5s forwards;
     animation-delay: 0.5s;
+
+    // Content
+    & > div {
+        animation: fadeIn 1s;
+    }
 }
 
 @-webkit-keyframes slide {

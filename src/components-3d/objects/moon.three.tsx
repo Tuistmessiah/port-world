@@ -100,14 +100,11 @@ export function Moon(props: MoonProps) {
         if (!localState.mesh) return;
 
         const initPos = localState.mesh.position.clone();
-        // console.log(localState.mesh, start);
-        console.log('what');
         start({ object: localState.mesh, start: initPos, end: new THREE.Vector3(0, -30, 0), duration: 80 });
     }, []);
 
     useFrame((state, delta) => {
         // localState.composer.render();
-        // console.log('merde');
         // Ensure any pre-render logic in useFrame callbacks is executed
         // state.gl.render(scene, camera);
         // // Now, handle post-processing

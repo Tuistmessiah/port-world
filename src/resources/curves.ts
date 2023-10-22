@@ -21,7 +21,6 @@ export class CircularSegmentCurve extends THREE.Curve<THREE.Vector3> {
         const rotatedStart = this.start.clone().applyMatrix4(rotationMatrix);
         // const direction = this.end.clone().sub(this.start).normalize();
         // const distance = this.start.distanceTo(this.end) * t;
-        // console.log(t, direction);
         // return rotatedStart.add(direction.multiplyScalar(distance));
 
         return rotatedStart;

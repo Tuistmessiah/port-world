@@ -10,6 +10,8 @@ import foodShowcaseImg from '../../assets/images/food-showcase.jpg';
 
 import style from './projects.module.scss';
 import { StyleUtils } from '../../utils/style.utils';
+import { useRecoilState } from 'recoil';
+import { deviceState } from '../../data/recoil/atoms/session.atoms';
 const s = StyleUtils.styleMixer(style);
 
 interface Project {
@@ -60,18 +62,20 @@ const projects: Project[] = [
  */
 export function Projects() {
     const [slideNumber, setSlideNumber] = useState(0);
+    const [device] = useRecoilState(deviceState);
+
+    const translateYVh = device === 'mobile' ? 85 : 96;
 
     return (
         <div className={s('container')}>
             <div className={s('project-display')}>
                 {projects.map((project) => (
-                    <div className={s('slide')} style={{ transform: `translateY(${-92 * slideNumber}vh)` }}>
+                    <div className={s('slide')} style={{ transform: `translateY(${-translateYVh * slideNumber}vh)` }}>
                         <Card {...project.card}>{project.content}</Card>
                         <div className={s('arrow-group')}>
                             <button
                                 className={s('arrows')}
                                 onClick={() => {
-                                    console.log('clicked');
                                     setSlideNumber((slideNumber) => slideNumber - 1);
                                 }}
                                 style={{ visibility: slideNumber === 0 ? 'hidden' : 'visible' }}
@@ -81,7 +85,6 @@ export function Projects() {
                             <button
                                 className={s('arrow')}
                                 onClick={() => {
-                                    console.log('clicked');
                                     setSlideNumber((slideNumber) => slideNumber + 1);
                                 }}
                                 style={{ visibility: slideNumber === projects.length - 1 ? 'hidden' : 'visible' }}
@@ -96,7 +99,6 @@ export function Projects() {
             <div
                 className={s('arrow')}
                 onClick={() => {
-                    console.log('clicked');
                     setSlideNumber((slideNumber) => slideNumber++);
                 }}
             ></div>

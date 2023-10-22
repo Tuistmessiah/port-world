@@ -1,3 +1,5 @@
+@import '../../styles/imports.scss';
+
 @import url('https://fonts.googleapis.com/css?family=Niramit:300,300i,700');
 
 $primary: #1d8cf8;
@@ -16,7 +18,6 @@ $timeline-body-shadow: 1px 3px 9px rgba(0, 0, 0, 0.1);
 .container {
     display: block;
     height: 100%;
-    max-width: 650px;
     padding: 1vh;
 
     & > h2 {
@@ -24,7 +25,7 @@ $timeline-body-shadow: 1px 3px 9px rgba(0, 0, 0, 0.1);
     }
 
     .scroll-container {
-        height: calc(100% - 3rem);
+        height: calc(100% - 0rem);
 
         overflow-x: auto;
 
@@ -59,6 +60,17 @@ $timeline-body-shadow: 1px 3px 9px rgba(0, 0, 0, 0.1);
     margin-right: 1rem;
     color: white;
 
+    @include breakpoint(mobile, max) {
+        margin: 0;
+        margin-top: 1rem;
+        padding-left: 0rem;
+
+        &:before {
+            display: none;
+            visibility: hidden;
+        }
+    }
+
     &:before {
         content: '';
         position: absolute;
@@ -80,6 +92,10 @@ $timeline-body-shadow: 1px 3px 9px rgba(0, 0, 0, 0.1);
         position: relative;
         margin-bottom: 2.5rem;
 
+        &:last-child {
+            margin-bottom: 0;
+        }
+
         .timeline-icon {
             position: absolute;
             left: -75px;
@@ -91,6 +107,10 @@ $timeline-body-shadow: 1px 3px 9px rgba(0, 0, 0, 0.1);
             font-size: 2rem;
             background: $secondary;
 
+            @include breakpoint(mobile, max) {
+                top: -10px;
+                left: 0px;
+            }
             i {
                 position: absolute;
                 left: 50%;
@@ -115,16 +135,22 @@ $timeline-body-shadow: 1px 3px 9px rgba(0, 0, 0, 0.1);
             padding: 20px 20px 15px;
             box-shadow: $timeline-body-shadow;
 
-            &:before {
-                content: '';
-                background: inherit;
-                width: 20px;
-                height: 20px;
-                display: block;
-                position: absolute;
-                left: -10px;
-                transform: rotate(45deg);
-                border-radius: 0 0 0 2px;
+            @include breakpoint(mobile, max) {
+                padding: 1rem;
+            }
+
+            @include breakpoint(tablet, min) {
+                &:before {
+                    content: '';
+                    background: inherit;
+                    width: 20px;
+                    height: 20px;
+                    display: block;
+                    position: absolute;
+                    left: -10px;
+                    transform: rotate(45deg);
+                    border-radius: 0 0 0 2px;
+                }
             }
 
             & > p {
@@ -133,7 +159,7 @@ $timeline-body-shadow: 1px 3px 9px rgba(0, 0, 0, 0.1);
 
             .tech-pills {
                 display: flex;
-                gap: 10px;
+                gap: 12px;
                 justify-content: flex-start;
                 flex-wrap: wrap;
                 list-style: none;
@@ -142,16 +168,21 @@ $timeline-body-shadow: 1px 3px 9px rgba(0, 0, 0, 0.1);
                 padding-left: 0;
 
                 & > svg {
-                    width: 2rem;
-                    height: 2rem;
+                    width: 2.5rem;
+                    height: 2.5rem;
                 }
 
                 .tech-pill {
-                    background-color: #cbe6ff;
-                    color: #002631;
+                    display: flex;
+                    align-items: center;
+
                     padding: 5px 10px;
                     border-radius: 15px;
+
                     font-size: 0.8em;
+
+                    background-color: #cbe6ff;
+                    color: #002631;
 
                     & > svg {
                         width: 1rem;
@@ -161,7 +192,35 @@ $timeline-body-shadow: 1px 3px 9px rgba(0, 0, 0, 0.1);
             }
 
             .timeline-title {
-                margin-bottom: 1.4rem;
+                display: flex;
+                margin-bottom: 3rem;
+
+                @include breakpoint(mobile, max) {
+                    margin-left: 4rem;
+                    margin-bottom: 1rem;
+                }
+
+                & > a {
+                    text-decoration: none;
+                    color: inherit;
+                    cursor: pointer;
+                    transition: transform 0.1s;
+
+                    &:hover,
+                    &:active,
+                    &:focus {
+                        text-decoration: none;
+                        color: inherit;
+                        outline: none;
+                        transform: scale(1.05);
+                    }
+
+                    background: $secondary;
+                    padding: 4px 8px;
+                    border-radius: 3px;
+                    font-size: 12px;
+                    font-weight: bold;
+                }
 
                 .badge {
                     background: $secondary;
@@ -170,14 +229,20 @@ $timeline-body-shadow: 1px 3px 9px rgba(0, 0, 0, 0.1);
                     font-size: 12px;
                     font-weight: bold;
                 }
+
+                & > svg {
+                    width: 1.5rem;
+                    height: 1.5rem;
+                    margin-left: 1.5rem;
+                }
             }
 
             .timeline-subtitle {
+                color: white;
                 font-weight: 300;
                 font-style: italic;
-                opacity: 0.4;
                 margin-top: 16px;
-                font-size: 11px;
+                font-size: 14px;
             }
         }
 
@@ -221,4 +286,8 @@ $timeline-body-shadow: 1px 3px 9px rgba(0, 0, 0, 0.1);
             }
         }
     }
+}
+
+.underline {
+    text-decoration: underline;
 }

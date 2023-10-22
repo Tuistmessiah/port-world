@@ -22,18 +22,21 @@ $page-padding: 2rem;
         position: absolute;
         top: 0;
         left: 0;
+
         display: flex;
+        justify-content: center;
 
         margin: $page-padding;
-        margin-left: calc(#{$page-padding} * 2);
+        margin-left: 1rem;
 
         transition: margin-left 500ms;
 
         & > button {
-            margin-right: 3rem;
+            margin: auto 1rem;
+            padding: 1rem;
             border: 1px solid transparent;
-            border-radius: 5px;
-            transition: background-color 0.3s, color 0.3s;
+            border-radius: 10px;
+            transition: all 0.3s;
 
             font-size: large;
             text-decoration: none;
@@ -43,6 +46,16 @@ $page-padding: 2rem;
             color: white;
             background: transparent;
 
+            &:first-child {
+                margin: auto 1rem;
+                padding: 0;
+
+                &:hover {
+                    color: white;
+                    background: transparent;
+                }
+            }
+
             & > svg {
                 width: 5rem;
                 height: 5rem;
@@ -50,12 +63,17 @@ $page-padding: 2rem;
 
             &:hover {
                 color: white;
-                background-color: black;
+                background-color: rgba(0, 0, 0, 0.5);
+                transform: scale(1.03);
+            }
+
+            &.active {
+                transform: scale(1.15);
+                text-decoration: underline;
             }
         }
 
         @include breakpoint(tablet, max) {
-            display: flex;
             flex-direction: column;
             align-items: flex-start;
 
@@ -67,10 +85,28 @@ $page-padding: 2rem;
         }
 
         @include breakpoint(mobile, max) {
+            width: 100%;
             z-index: 2;
             flex-direction: row;
+            justify-content: space-around;
             align-items: unset;
-            margin: $page-padding;
+            margin: 0;
+
+            & > button {
+                margin: auto 0rem;
+                padding: 0.5rem;
+
+                &:first-child {
+                    margin: 0.5rem;
+                }
+                &:last-child {
+                    margin-right: 1rem;
+                }
+                &.active {
+                    transform: scale(1.05);
+                    text-decoration: underline;
+                }
+            }
         }
     }
 
@@ -89,6 +125,12 @@ $page-padding: 2rem;
         top: 10rem;
         left: 0;
         margin-left: calc(#{$page-padding} * 2);
+
+        @include breakpoint(tablet, max) {
+            left: unset;
+            right: 0;
+            margin-right: calc(#{$page-padding} * 2);
+        }
     }
 
     .page-bg {

@@ -1,18 +1,20 @@
 import { ReactElement, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Canvas, useThree } from '@react-three/fiber';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 
 import { threeState } from './data/recoil/atoms/scenes.atoms';
-import { pageState } from './data/recoil/atoms/session.atoms';
+import { PageState, deviceState, pageState } from './data/recoil/atoms/session.atoms';
+
+import { UiuxUtils } from './styles/uiux.utils';
+import { useInit } from './hooks/use-init.hook';
 
 import { Composition } from './composition.three';
 import { AboutMe } from './pages/about-me/about-me.page';
 import { Projects } from './pages/projects/projects.page';
 import { Career } from './pages/career/career.page';
-import { Media } from './pages/media/media.page';
-
 import { PageSlider } from './components/page-slider/page-slider.component';
+import { Footer } from './components/footer/footer.component';
 
 import EarthSvg from './assets/svgs/earth-svgrepo-com.svg?react';
 
@@ -39,6 +41,16 @@ export function App(props: { children: ReactElement }) {
     const location = useLocation();
 
     const setPage = useSetRecoilState(pageState);
+    const [, setDevice] = useRecoilState(deviceState);
+
+    useInit(() => {
+        // Set type of device by size ('mobile' | 'tablet' | 'desktop' | 'large')
+        handleWindowSizeChange();
+        window.addEventListener('resize', handleWindowSizeChange);
+        return () => {
+            window.removeEventListener('resize', handleWindowSizeChange);
+        };
+    });
 
     return (
         <div className={s('container')}>
@@ -46,7 +58,7 @@ export function App(props: { children: ReactElement }) {
                 <button
                     onClick={() => {
                         navigate('/');
-                        setPage('/');
+                        setPage({ endpoint: '/' });
                     }}
                 >
                     <EarthSvg />
@@ -56,9 +68,10 @@ export function App(props: { children: ReactElement }) {
                         <button
                             onClick={() => {
                                 navigate(path);
-                                setPage(path as any);
+                                setPage({ endpoint: path, section: undefined } as PageState);
                             }}
                             key={name}
+                            className={s({ active: location.pathname === path })}
                         >
                             {name}
                         </button>
@@ -83,16 +96,21 @@ export function App(props: { children: ReactElement }) {
 
             {location.pathname === '/' ? <div className={s('landing-content')}>{props.children}</div> : <PageSlider>{props.children}</PageSlider>}
 
+            <Footer />
+
             <div className={s('page-bg')} />
         </div>
     );
+
+    function handleWindowSizeChange() {
+        setDevice(UiuxUtils.getDeviceType());
+    }
 }
 
 export function endpoints(): { name: string; path: string; page: ReactElement }[] {
     return [
         { name: 'About', path: '/about', page: <AboutMe /> },
-        { name: 'Projects', path: '/projects', page: <Projects /> },
+        { name: 'P.Projects', path: '/projects', page: <Projects /> },
         { name: 'Career', path: '/career', page: <Career /> },
-        { name: 'Media', path: '/media', page: <Media /> },
     ];
 }

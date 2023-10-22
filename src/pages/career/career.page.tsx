@@ -1,3 +1,6 @@
+import { useRecoilState } from 'recoil';
+import { pageState } from '../../data/recoil/atoms/session.atoms';
+
 import AngularSvg from '../../assets/svgs/angular-svgrepo-com.svg?react';
 import MySqlSvg from '../../assets/svgs/mysql-svgrepo-com.svg?react';
 import SushiSvg from '../../assets/svgs/sushi-svgrepo-com.svg?react';
@@ -8,37 +11,56 @@ import PostgreSqlSvg from '../../assets/svgs/postgresql-svgrepo-com.svg?react';
 import TypescriptSvg from '../../assets/svgs/typescript-icon-svgrepo-com.svg?react';
 import LeafletSvg from '../../assets/svgs/leaflet-svgrepo-com.svg?react';
 import NodeSvg from '../../assets/svgs/node-js-svgrepo-com.svg?react';
-import ResearchSvg from '../../assets/svgs/research-telescope-svgrepo-com.svg?react';
 import FirebaseSvg from '../../assets/svgs/firebase-svgrepo-com.svg?react';
 import ReduxSvg from '../../assets/svgs/redux-svgrepo-com.svg?react';
 import VueSvg from '../../assets/svgs/vue-9-logo-svgrepo-com.svg?react';
+import BookSvg from '../../assets/svgs/book-education-learning-puzzle-school-study-svgrepo-com.svg?react';
+import OpenGlSvg from '../../assets/svgs/opengl-svgrepo-com.svg?react';
+import PhysicsSvg from '../../assets/svgs/physics-svgrepo-com.svg?react';
+import ScientistSvg from '../../assets/svgs/scientist-svgrepo-com.svg?react';
+import WolframSvg from '../../assets/svgs/wolfram-svgrepo-com.svg?react';
+import MatrixSvg from '../../assets/svgs/matrix-svgrepo-com.svg?react';
+import GraphQLSvg from '../../assets/svgs/graphql-svgrepo-com.svg?react';
+import NLSvg from '../../assets/svgs/netherlands-holland-svgrepo-com.svg?react';
+import DockerSvg from '../../assets/svgs/docker-svgrepo-com.svg?react';
+import PTSvg from '../../assets/svgs/flag-for-portugal-svgrepo-com.svg?react';
 
 import { StyleUtils } from '../../utils/style.utils';
 import style from './career.module.scss';
 const s = StyleUtils.styleMixer(style);
 
 export function Career() {
+    const [, setPage] = useRecoilState(pageState);
     return (
         <div className={s('container')}>
             <div className={s('scroll-container')}>
                 <div className={s('timeline')}>
                     <div className={s('timeline-container')}>
                         <div className={s('timeline-icon')}>
-                            <ResearchSvg />
+                            <BookSvg />
                         </div>
-                        <div className={s('timeline-body')}>
+                        <div
+                            className={s('timeline-body')}
+                            onClick={() => {
+                                setPage({ endpoint: '/career', section: 'academia' });
+                            }}
+                        >
                             <h4 className={s('timeline-title')}>
-                                <span className={s('badge')}>Academia</span>
+                                <a href="https://tecnico.ulisboa.pt/en/" target="_blank">
+                                    Academia
+                                </a>
+                                <PTSvg />
                             </h4>
                             <p>Physics Engineering - Graduation & Post Graduation</p>
                             <p>Computer Science Subjects on C. Graphics</p>
                             <p>Research Scholarship at ISTAR-ISCTE (Lisbon)</p>
                             <ul className={s('tech-pills')}>
-                                {['Engineering', 'Researcher', 'OpenGL/WebGL', 'Physics/Math'].map((tech: any, index: any) => (
-                                    <li key={index} className={s('tech-pill')}>
-                                        {tech}
-                                    </li>
-                                ))}
+                                <PhysicsSvg />
+                                <OpenGlSvg />
+                                <ScientistSvg />
+                                <WolframSvg />
+                                <MatrixSvg />
+                                <li className={s('tech-pill')}>{'Consultant'}</li>
                             </ul>
                             <p className={s('timeline-subtitle')}>{'< 2018'}</p>
                         </div>
@@ -47,15 +69,26 @@ export function Career() {
                         <div className={s('timeline-icon')}>
                             <AngularSvg />
                         </div>
-                        <div className={s('timeline-body')}>
+                        <div
+                            className={s('timeline-body')}
+                            onClick={() => {
+                                setPage({ endpoint: '/career', section: 'novabase' });
+                            }}
+                        >
                             <h4 className={s('timeline-title')}>
-                                <span className={s('badge')}>Novabase</span>
+                                <a href="https://www.novabase.com/en/" target="_blank">
+                                    Novabase Lisbon
+                                </a>
                             </h4>
                             <p>
-                                As a Web Consultant for a prominent advertisement firm, I played a pivotal role in the conception and realization of their sophisticated internal back-office system.
-                                This initiative was critical to managing their multiple departments, each intertwined with intricate data streams and dependencies. My expertise was instrumental in
-                                untangling and streamlining this complex web of information, ensuring data cohesion and seamless inter-departmental interactions. By integrating advanced full-stack
-                                technologies, I engineered an intuitive and efficient user interface that significantly enhanced the company's workflow.
+                                <strong>TLDR</strong>: Developed backoffice service from scratch to manage data and workflow from different departments. Fullstack.
+                            </p>
+                            <p>
+                                As a <strong className={s('underline')}>Web Consultant</strong> for a prominent advertisement firm, GroupM, I played a pivotal role in the conception and realization of
+                                their sophisticated internal back-office system. This initiative was critical to managing their multiple departments, each intertwined with intricate data streams and
+                                dependencies. My expertise was instrumental in untangling and streamlining this complex web of information, ensuring data cohesion and seamless inter-departmental
+                                interactions. By integrating advanced full-stack technologies, I engineered an intuitive and efficient user interface that significantly enhanced the company's
+                                workflow.
                             </p>
                             <p>
                                 Collaboration was at the heart of this project, demanding extensive business analysis to capture every nuance of the firm's requirements. I closely partnered with a
@@ -66,7 +99,6 @@ export function Career() {
                             <ul className={s('tech-pills')}>
                                 <AngularSvg />
                                 <TypescriptSvg />
-
                                 <MySqlSvg />
                                 <li className={s('tech-pill')}>{'Consultant'}</li>
                                 <li className={s('tech-pill')}>{'Junior'}</li>
@@ -80,8 +112,13 @@ export function Career() {
                         </div>
                         <div className={s('timeline-body')}>
                             <h4 className={s('timeline-title')}>
-                                <span className={s('badge')}>Freelancing</span>
+                                <a href="https://www.aruki.pt/" target="_blank">
+                                    Aruki Sushi Delivery
+                                </a>
                             </h4>
+                            <p>
+                                <strong>TLDR</strong>: Worked with a sushi restaurant to develop a backoffice system to manage their workforce and streamline backend processes for ordering. React FE.
+                            </p>
                             <p>
                                 During my freelancing tenure, I spearheaded a digital transformation project for a renowned sushi restaurant aiming to optimize their internal operations. Recognizing
                                 the need for a centralized system to manage their workforce and streamline backend processes, I designed and implemented a comprehensive back-office solution tailored
@@ -105,8 +142,15 @@ export function Career() {
                         </div>
                         <div className={s('timeline-body')}>
                             <h4 className={s('timeline-title')}>
-                                <span className={s('badge')}>Elanza</span>
+                                <a href="https://elanza.nl/" target="_blank">
+                                    Elanza Utrecht
+                                </a>
+                                <NLSvg />
                             </h4>
+                            <p>
+                                <strong>TLDR</strong>: Helped a startup with a platform for NL healthcare workers with authentication, invoicing, email generation, UI and stack migration. React FE,
+                                Node BE.
+                            </p>
                             <p>
                                 In an ambitious startup focused on streamlining the engagement of freelancing professionals within the Dutch healthcare system, I took on a significant role as a
                                 Fullstack Developer. The startup's vision was to revolutionize the way healthcare professionals connected and collaborated, and their existing React application was
@@ -125,6 +169,8 @@ export function Career() {
                                 <NodeSvg />
                                 <ReduxSvg />
                                 <FirebaseSvg />
+                                <GraphQLSvg />
+                                <DockerSvg />
                                 <li className={s('tech-pill')}>{'Medior'}</li>
                             </ul>
                             <p className={s('timeline-subtitle')}>{'2021'}</p>
@@ -136,8 +182,13 @@ export function Career() {
                         </div>
                         <div className={s('timeline-body')}>
                             <h4 className={s('timeline-title')}>
-                                <span className={s('badge')}>GIS Specialisten / TPG</span>
+                                <a href="https://www.thepeoplegroup.nl/" target="_blank">
+                                    The People Group (GIS Specialisten)
+                                </a>
                             </h4>
+                            <p>
+                                <strong>TLDR</strong>: Lead frontend developer for a web map application. Multiple FE frameworks. Nest BE. API Integrations.
+                            </p>
                             <p>
                                 In my current role, I've had the privilege of pioneering the development of a cutting-edge web map application, architected from the ground up. This application
                                 leverages the capabilities of a third-party GIS software, seamlessly integrated into a robust frontend framework composed of React, TypeScript, Redux, and LeafletJS.
@@ -154,6 +205,7 @@ export function Career() {
                                 <LeafletSvg />
                                 <VueSvg />
                                 <li className={s('tech-pill')}>{'Lead Frontend'}</li>
+                                <li className={s('tech-pill')}>{'API Integrations'}</li>
                             </ul>
                             <p className={s('timeline-subtitle')}>{'2024'}</p>
                         </div>

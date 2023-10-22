@@ -12,7 +12,7 @@ interface UseLifecycleReturn {
 /** To divide a component behaviour into 3 phases (life cycles) and run effects in each phase, asynchronously.
  * @example 
       const { isConstructed, isInit, useAfter } = useLifecycle(constructorCb, initCb);
-      useAfter(() => console.log('This effect runs after init'), []);
+      useAfter(() => console.info('This effect runs after init'), []);
       if (!isConstructed) return null;
  * @usage 
       following the example implementation, the component will render null until the constructorCb is finished (phase 1), 

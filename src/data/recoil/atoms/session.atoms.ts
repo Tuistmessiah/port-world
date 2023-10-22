@@ -7,6 +7,13 @@ interface ControlState {
     isListeningToScroll: boolean;
 }
 
+export interface PageState {
+    endpoint: '/' | '/about' | '/projects' | '/career';
+    section?: 'academia' | 'novabase' | 'aruki';
+    moving?: boolean;
+    orbitControls?: boolean;
+}
+
 export const controlState = atom<ControlState>({
     key: 'controlState',
     default: {
@@ -16,12 +23,17 @@ export const controlState = atom<ControlState>({
     },
 });
 
-export const pageState = atom<'/' | '/about' | '/projects' | '/career' | '/media'>({
+export const pageState = atom<PageState>({
     key: 'pageState',
-    default: '/',
+    default: { endpoint: '/', section: undefined, moving: undefined },
 });
 
 export const threeState = atom<RootState | undefined>({
     key: 'threeState',
+    default: undefined,
+});
+
+export const deviceState = atom<'mobile' | 'tablet' | 'laptop' | 'desktop' | 'large' | undefined>({
+    key: 'deviceState',
     default: undefined,
 });

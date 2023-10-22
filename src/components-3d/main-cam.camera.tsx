@@ -3,42 +3,27 @@ import { useEffect, useState } from 'react';
 import * as THREE from 'three';
 import { useRecoilState } from 'recoil';
 import TWEEN from '@tweenjs/tween.js';
+import { useNavigate } from 'react-router-dom';
 
 import { pageState } from '../data/recoil/atoms/session.atoms';
-
-// import { GrannyKnot } from 'three/examples/jsm/curves/CurveExtras.js';
-// import { ParametricGeometries } from 'three/examples/jsm/geometries/ParametricGeometries.js';
 
 import { useKeyPressToggle } from '../hooks/use-key-press-toggle.hook';
 import { useMoveTo } from '../hooks/use-move-to.hook';
 import { useInit } from '../hooks/use-init.hook';
 
-import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
-import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
-import { useMemoAsync } from '../hooks/use-memo-async.hook';
 import { CircularSegmentCurve } from '../resources/curves';
+import { Html, OrbitControls } from '@react-three/drei';
 
-export interface MainCamProps {}
-
-const defaultProps = {} as Required<MainCamProps>;
-
-let composer: EffectComposer;
-
-const params = {
-    threshold: 0,
-    strength: 1,
-    radius: 0,
-    exposure: 1,
-};
+import { StyleUtils } from '../utils/style.utils';
+import style from './main-cam.module.scss';
+const s = StyleUtils.styleMixer(style);
 
 /**
  * Main Camera
  */
-export function MainCam(props: MainCamProps) {
-    const {} = { ...defaultProps, ...props };
-    const [page] = useRecoilState(pageState);
+export function MainCam() {
+    const [page, setPage] = useRecoilState(pageState);
+    const navigate = useNavigate();
 
     const rootState = useThree();
 
@@ -50,20 +35,8 @@ export function MainCam(props: MainCamProps) {
         rootState.scene.add(sphere);
         setSphere(sphere);
 
-        rootState.camera.position.set(20, 20, 20);
-        rootState.camera.lookAt(new THREE.Vector3(10, 0, -10));
-
-        // const renderScene = new RenderPass(rootState.scene, rootState.camera);
-        // const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
-        // bloomPass.threshold = params.threshold;
-        // bloomPass.strength = params.strength;
-        // bloomPass.radius = params.radius;
-        // const outputPass = new OutputPass();
-
-        // composer = new EffectComposer(rootState.gl);
-        // composer.addPass(renderScene);
-        // composer.addPass(bloomPass);
-        // composer.addPass(outputPass);
+        rootState.camera.position.set(40, 40, 40);
+        rootState.camera.lookAt(new THREE.Vector3(7, 0, 0));
     });
 
     const [sphere, setSphere] = useState<THREE.Mesh>();
@@ -71,41 +44,66 @@ export function MainCam(props: MainCamProps) {
         if (!sphere) return;
         const initPos = rootState.camera.position.clone();
 
-        // TODO: Make view a bit angled, with being able to see the horizon.
-        // TODO: Turn on rotation to the planet AND make camera follow it.
-        // TODO: Disable orbital controls here. Enable it again when zoomed out enough (have a move to action to further away)
-        // TODO: Add (to planet component) the outline highlight when hovering an object (POC)
-        // TODO: Make a nice small planet (4 areas: Project Nation: city + roads + construction, Career Arquipelago (each island a palce I worked),
-        // TODO  Media Cloud: castle on the clouds, About Island: small house, dragonball style with things aluding to my hobbies, nature hike, videogames
-        // TODO  traveling, etc)
-        // TODO: Add highlight to page areas and clicking them should change page
-        // TODO: Add instructions suggested by Jamie
-        // TODO: Add toon shader to water
-        // TODO: Add plane flying around, add submarine submerging when flying over it
-
         const distance = initPos.distanceTo(rootState.camera.position);
         const duration = distance < 20 ? 3 : 5;
-        console.log({ page });
-        switch (page) {
+
+        switch (page.endpoint) {
             case '/':
-                console.log('init');
-                moveToTarget(rootState.camera, new THREE.Vector3(40, 40, 40), new THREE.Vector3(0, 0, 0), 5000);
+                moveToTarget(rootState.camera, new THREE.Vector3(40, 40, -40), new THREE.Vector3(0, 0, 0), 1000);
+                // TODO: Make it so user cannot control orbit while moving to landing page
                 break;
             case '/about':
-                console.log('page about');
-                moveToTarget(rootState.camera, new THREE.Vector3(40, 0, 0), new THREE.Vector3(0, 0, -10), 5000);
-                // start({ object: rootState.camera, start: initPos, end: new THREE.Vector3(7, 3, -19), duration });
+                // y > 0 is the 'projects' position
+                if (rootState.camera.position.y > 0) {
+                    moveToTarget(rootState.camera, new THREE.Vector3(19, 0, 12), new THREE.Vector3(10, -5, -20), 2000);
+                    setTimeout(() => {
+                        moveToTarget(rootState.camera, new THREE.Vector3(10, -5, -20), new THREE.Vector3(-10, 10, 0), 2000);
+                    }, 2000);
+                } else {
+                    moveToTarget(rootState.camera, new THREE.Vector3(10, -5, -20), new THREE.Vector3(-10, 10, 0), 2000);
+                }
                 break;
             case '/projects':
-                console.log('page projects');
-                moveToTarget(rootState.camera, new THREE.Vector3(0, 0, 40), new THREE.Vector3(10, 0, 0), 5000);
-                // start({ object: rootState.camera, start: initPos, end: new THREE.Vector3(-20, 13, -16), duration });
+                // y < 0 is the 'about' position
+                if (rootState.camera.position.y < 0) {
+                    moveToTarget(rootState.camera, new THREE.Vector3(19, 0, 12), new THREE.Vector3(0, 5, 5), 2000);
+                    setTimeout(() => {
+                        moveToTarget(rootState.camera, new THREE.Vector3(0, 15, 25), new THREE.Vector3(5, 0, 0), 2000);
+                    }, 2000);
+                } else {
+                    moveToTarget(rootState.camera, new THREE.Vector3(0, 15, 25), new THREE.Vector3(5, 0, 0), 2000);
+                }
                 break;
             case '/career':
-                // start({ object: rootState.camera, start: initPos, end: new THREE.Vector3(2, 7, 29), duration });
-                break;
-            case '/media':
-                // start({ object: rootState.camera, start: initPos, end: new THREE.Vector3(16, -24, 0.5), duration });
+                // x > 0 && z> 0 is on the 'other side' of 'career' position
+                if (rootState.camera.position.x > 0 && rootState.camera.position.z > 0) {
+                    moveToTarget(rootState.camera, new THREE.Vector3(10, 23, -11), new THREE.Vector3(-19, 0, -12), 2000);
+                    setTimeout(() => {
+                        // TODO: Put switch in separate function
+                        switch (page.section) {
+                            case 'academia':
+                                moveToTarget(rootState.camera, new THREE.Vector3(-13.5, 9.8, -2.4), new THREE.Vector3(-6, 8, 3), 2000);
+                                break;
+                            case 'novabase':
+                                moveToTarget(rootState.camera, new THREE.Vector3(-11.6, 7, 2), new THREE.Vector3(5, 3, -7), 2000);
+                                break;
+                            default:
+                                moveToTarget(rootState.camera, new THREE.Vector3(-19, 0, -12), new THREE.Vector3(-6, 2.5, 1), 2000);
+                        }
+                    }, 2000);
+                } else {
+                    switch (page.section) {
+                        case 'academia':
+                            moveToTarget(rootState.camera, new THREE.Vector3(-13.5, 9.8, -2.4), new THREE.Vector3(-6, 8, 3), 2000);
+                            break;
+                        case 'novabase':
+                            moveToTarget(rootState.camera, new THREE.Vector3(-11.6, 7, 2), new THREE.Vector3(5, 3, -7), 2000);
+                            break;
+                        default:
+                            moveToTarget(rootState.camera, new THREE.Vector3(-19, 0, -12), new THREE.Vector3(-6, 2.5, 1), 2000);
+                    }
+                }
+
                 break;
             default:
                 break;
@@ -113,13 +111,12 @@ export function MainCam(props: MainCamProps) {
     }, [page]);
 
     useFrame(() => {
-        // composer.render();
         TWEEN.update();
+        console.log(rootState.camera.position);
     });
 
     const { start, stop } = useMoveTo({
         CurveClass: CircularSegmentCurve,
-        // curve: new CircularSegmentCurve(new THREE.Vector3(30, 0, 0), new THREE.Vector3(0, 30, 0)),
         nPoints: 10,
     });
 
@@ -143,33 +140,58 @@ export function MainCam(props: MainCamProps) {
         start({ object: sphere, start: initPos, end: new THREE.Vector3(0, 30, -10), duration: 5 });
     });
 
-    return null;
+    return (
+        <>
+            {/* Page Tags */}
+            {page.endpoint !== '/career' && (
+                <mesh position={[-12, 6.5, -7]}>
+                    (
+                    <Html distanceFactor={60} style={{ pointerEvents: 'all' }}>
+                        <button
+                            className={s('page-tag')}
+                            onClick={() => {
+                                navigate('/career');
+                                setPage({ endpoint: '/career', section: undefined });
+                            }}
+                        >
+                            {'Career Nation'}
+                        </button>
+                    </Html>
+                    )
+                </mesh>
+            )}
+            {/* Sections Tags: Career */}
+            <mesh position={[-6.5, 8.7, 0.57]}>
+                {page.endpoint === '/career' && page.section !== 'academia' && (
+                    <Html distanceFactor={10}>
+                        <button
+                            className={s('content')}
+                            onClick={() => {
+                                setPage({ endpoint: '/career', section: 'academia' });
+                            }}
+                        >
+                            {'Academia Castle'}
+                        </button>
+                    </Html>
+                )}
+            </mesh>
+            <mesh position={[-8.5, 5.9, -0.64]}>
+                {page.endpoint === '/career' && page.section !== 'novabase' && (
+                    <Html distanceFactor={10}>
+                        <button
+                            className={s('content')}
+                            onClick={() => {
+                                setPage({ endpoint: '/career', section: 'novabase' });
+                            }}
+                        >
+                            {'Novabase Automations'}
+                        </button>
+                    </Html>
+                )}
+            </mesh>
+        </>
+    );
 }
-
-// function moveToTarget(camera: THREE.Camera, targetPosition: THREE.Vector3, duration: number = 2000) {
-//     const startPosition = camera.position.clone();
-
-//     const tweenObj = {
-//         x: startPosition.x,
-//         y: startPosition.y,
-//         z: startPosition.z,
-//     };
-
-//     new TWEEN.Tween(tweenObj)
-//         .to(
-//             {
-//                 x: targetPosition.x,
-//                 y: targetPosition.y,
-//                 z: targetPosition.z,
-//             },
-//             duration
-//         )
-//         .easing(TWEEN.Easing.Quadratic.Out)
-//         .onUpdate(function () {
-//             camera.position.set(tweenObj.x, tweenObj.y, tweenObj.z);
-//         })
-//         .start();
-// }
 
 function moveToTarget(camera: THREE.Camera, targetPosition: THREE.Vector3, lookAtPosition: THREE.Vector3, duration: number = 2000) {
     const startPosition = camera.position.clone();

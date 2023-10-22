@@ -119,7 +119,6 @@ export function Planet(props: PlanetProps) {
         // const intersects = localState.raycaster.intersectObjects(satellite0Gltf.scene.children);
 
         // for (let i = 0; i < intersects.length; i++) {
-        //     console.log(intersects);
         //     if (intersects) (intersects[i].object as any).material.color.set(0xff0000);
         //     // (intersects[i].object as any)?.material.color.set(0xff0000);
         // }
