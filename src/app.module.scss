@@ -11,6 +11,7 @@ $page-padding: 2rem;
     width: 100vw;
 
     color: white;
+    animation: fadeIn 1s forwards;
 
     pointer-events: none;
 
@@ -74,9 +75,6 @@ $page-padding: 2rem;
         }
 
         @include breakpoint(tablet, max) {
-            flex-direction: column;
-            align-items: flex-start;
-
             margin: calc(#{$page-padding} / 2);
 
             & > button {
@@ -125,11 +123,16 @@ $page-padding: 2rem;
         top: 10rem;
         left: 0;
         margin-left: calc(#{$page-padding} * 2);
+        opacity: 1;
+
+        transition: opacity 2s ease-in-out;
 
         @include breakpoint(tablet, max) {
-            left: unset;
-            right: 0;
             margin-right: calc(#{$page-padding} * 2);
+        }
+
+        @include breakpoint(mobile, max) {
+            margin: 0.1rem;
         }
     }
 
@@ -140,5 +143,7 @@ $page-padding: 2rem;
         width: 100vw;
         height: 100vh;
         background: linear-gradient(180deg, rgba(255, 255, 0, 1) 0%, rgba(49, 2, 125, 1) 0%, rgba(123, 30, 248, 1) 100%);
+
+        animation: fadeIn 1s;
     }
 }

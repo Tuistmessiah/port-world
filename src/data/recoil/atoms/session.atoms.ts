@@ -9,7 +9,7 @@ interface ControlState {
 
 export interface PageState {
     endpoint: '/' | '/about' | '/projects' | '/career';
-    section?: 'academia' | 'novabase' | 'aruki';
+    section?: 'academia' | 'novabase' | 'aruki' | 'elanza' | 'thepeoplegroup';
     moving?: boolean;
     orbitControls?: boolean;
 }

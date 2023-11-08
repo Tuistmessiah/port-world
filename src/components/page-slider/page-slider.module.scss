@@ -4,20 +4,10 @@
     position: fixed;
     z-index: 2;
     top: 1vh;
-    bottom: 1vh;
-    right: 1vh;
+    bottom: 1vw;
+    right: 1vw;
     width: 0;
     max-width: 40vw;
-
-    @include breakpoint(tablet, max) {
-        max-width: 50vw;
-    }
-    @include breakpoint(mobile, max) {
-        right: unset;
-        top: 12vh;
-        max-width: 98vw;
-        overflow-y: auto;
-    }
 
     border: 1px solid transparent;
     border-radius: 10px;
@@ -27,10 +17,23 @@
     color: white;
     background-color: rgba(36, 36, 36, 0.95);
 
-    -webkit-animation: slide 0.5s forwards;
+    -webkit-animation: slide 1.5s forwards;
     -webkit-animation-delay: 0.5s;
-    animation: slide 0.5s forwards;
+    animation: slide 1s forwards;
     animation-delay: 0.5s;
+
+    @include breakpoint(tablet-laptop, max) {
+        max-width: 50vw;
+        align-self: flex-end;
+    }
+    @include breakpoint(tablet, max) {
+        left: 1vw;
+        top: 40vh;
+        max-width: 98vw;
+        overflow-y: auto;
+
+        background-color: rgba(36, 36, 36, 0.7);
+    }
 
     // Content
     & > div {
@@ -47,5 +50,27 @@
 @keyframes slide {
     100% {
         width: 100vw;
+    }
+}
+
+.closed {
+    animation: slideOut 0.5s forwards;
+
+    @-webkit-keyframes slideOut {
+        0% {
+            width: 100vw;
+        }
+        100% {
+            width: 0;
+        }
+    }
+
+    @keyframes slideOut {
+        0% {
+            width: 100vw;
+        }
+        100% {
+            width: 0;
+        }
     }
 }

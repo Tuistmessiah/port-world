@@ -1,34 +1,37 @@
 .page-tag {
-    padding-top: 10px;
-    text-align: left;
-    background: #202035;
-    color: white;
     padding: 10px 15px;
     border-radius: 10px;
+    border: 1px solid white;
 
+    color: white;
+    background: #202035;
+
+    text-align: left;
     pointer-events: all;
     cursor: pointer;
+
+    transition: transform 0.2s ease;
+
+    &:hover {
+        transform: scale(1.1);
+    }
 }
 
 .content {
-    padding-top: 10px;
-    transform: translate3d(calc(50% + 40px), 0, 0);
-    text-align: left;
-    background: #202035;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 5px;
+    padding: 6px 10px;
+    border-radius: 10px;
+    border: 1px solid rgb(118, 166, 255);
 
+    color: white;
+    background: #202035;
+
+    text-align: left;
     pointer-events: all;
     cursor: pointer;
 
-    &::before {
-        content: '';
-        position: absolute;
-        top: 25px;
-        left: -40px;
-        height: 1px;
-        width: 40px;
-        background: black;
+    transition: transform 0.2s ease;
+
+    &:hover {
+        transform: scale(1.1);
     }
 }

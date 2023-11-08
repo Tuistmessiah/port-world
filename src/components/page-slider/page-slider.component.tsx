@@ -9,6 +9,6 @@ const s = StyleUtils.styleMixer(style);
 /**
  * Wrapper to render pages in a slider coming from the right
  */
-export function PageSlider(props: { children: ReactElement }) {
-    return <div className={s('container')}>{props.children}</div>;
+export function PageSlider(props: { children: ReactElement; isOpen: boolean }) {
+    return <div className={s('container', { closed: !props.isOpen })}>{props.children}</div>;
 }

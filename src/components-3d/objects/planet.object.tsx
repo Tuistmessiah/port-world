@@ -28,6 +28,8 @@ import satellite1GlbPath from '../../assets/models/kenney-space-kit/machine_barr
 
 interface LocalState {
     mesh: THREE.Mesh;
+    planet: THREE.Group | null;
+    ocean?: THREE.Object3D<THREE.Event>;
     atmosphere: THREE.Mesh;
     composer: EffectComposer;
     satellite: {
@@ -52,6 +54,7 @@ function initLocalState(rootState: RootState): LocalState {
                 },
             })
         ),
+        planet: null,
         atmosphere: new THREE.Mesh(
             new THREE.SphereGeometry(5, 50, 50),
             new THREE.ShaderMaterial({
@@ -112,6 +115,7 @@ export function Planet(props: PlanetProps) {
         localState.satellite.refs[1].lookAt(new THREE.Vector3(0, 0, 0));
         // if (outlineEffect) localState.composer.render();
 
+        if (localState.ocean?.rotation.z) (localState.ocean?.rotation as any).z += 0.0005;
         // update the picking ray with the camera and pointer position
         // localState.raycaster.setFromCamera(localState.pointer, rootState.camera);
 
@@ -143,6 +147,45 @@ export function Planet(props: PlanetProps) {
         localState.satellite.refs[0].position.set(0, 0, 0);
         localState.satellite.refs[1].position.set(0, 0, 0);
     }
+
+    function setupPlanetModel(planet: THREE.Group, rootState: RootState) {
+        console.log({ planet });
+        planet.traverse((child) => {
+            if (child instanceof THREE.Mesh) {
+                const originalMaterial = child.material;
+                const shaderMaterial = new THREE.ShaderMaterial({
+                    vertexShader: planetVertexShader,
+                    fragmentShader: planetFragmentShader,
+                    uniforms: {
+                        objectColor: { value: new THREE.Color(1, 1, 1) },
+                        objectTexture: { value: null },
+                        useTexture: { value: false },
+                        resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+                    },
+                });
+
+                if (originalMaterial && originalMaterial.color) {
+                    shaderMaterial.uniforms.objectColor.value = originalMaterial.color;
+                }
+
+                if (originalMaterial && originalMaterial.map) {
+                    originalMaterial.map.wrapS = THREE.ClampToEdgeWrapping;
+                    originalMaterial.map.wrapT = THREE.ClampToEdgeWrapping;
+                    shaderMaterial.uniforms.objectTexture.value = originalMaterial.map;
+                    shaderMaterial.uniforms.useTexture.value = true;
+                }
+
+                child.material = shaderMaterial;
+
+                window.addEventListener('resize', () => {
+                    shaderMaterial.uniforms.resolution.value.set(window.innerWidth, window.innerHeight);
+                });
+            }
+        });
+        localState.planet = planet;
+        localState.ocean = localState.planet.children.find((child) => child.name === 'Ocean');
+        rootState.scene.add(planet);
+    }
 }
 
 function addBloomPass(rootState: RootState, object: THREE.Object3D, localState: LocalState) {
@@ -169,40 +212,4 @@ function setupAtmosphere(rootState: RootState) {
         })
     );
     rootState.scene.add(atmosphere);
-}
-
-function setupPlanetModel(planet: THREE.Group, rootState: RootState) {
-    planet.traverse((child) => {
-        if (child instanceof THREE.Mesh) {
-            const originalMaterial = child.material;
-            const shaderMaterial = new THREE.ShaderMaterial({
-                vertexShader: planetVertexShader,
-                fragmentShader: planetFragmentShader,
-                uniforms: {
-                    objectColor: { value: new THREE.Color(1, 1, 1) },
-                    objectTexture: { value: null },
-                    useTexture: { value: false },
-                    resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
-                },
-            });
-
-            if (originalMaterial && originalMaterial.color) {
-                shaderMaterial.uniforms.objectColor.value = originalMaterial.color;
-            }
-
-            if (originalMaterial && originalMaterial.map) {
-                originalMaterial.map.wrapS = THREE.ClampToEdgeWrapping;
-                originalMaterial.map.wrapT = THREE.ClampToEdgeWrapping;
-                shaderMaterial.uniforms.objectTexture.value = originalMaterial.map;
-                shaderMaterial.uniforms.useTexture.value = true;
-            }
-
-            child.material = shaderMaterial;
-
-            window.addEventListener('resize', () => {
-                shaderMaterial.uniforms.resolution.value.set(window.innerWidth, window.innerHeight);
-            });
-        }
-    });
-    rootState.scene.add(planet);
 }

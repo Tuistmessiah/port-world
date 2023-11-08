@@ -27,7 +27,7 @@ $timeline-body-shadow: 1px 3px 9px rgba(0, 0, 0, 0.1);
     .scroll-container {
         height: calc(100% - 0rem);
 
-        overflow-x: auto;
+        overflow-x: hidden;
 
         // Scrollbar
         &::-webkit-scrollbar {
@@ -92,12 +92,24 @@ $timeline-body-shadow: 1px 3px 9px rgba(0, 0, 0, 0.1);
         position: relative;
         margin-bottom: 2.5rem;
 
+        cursor: pointer;
+
+        &:hover {
+            .timeline-icon {
+                transform: scale(1.2);
+            }
+            .timeline-body {
+                // transform: scale(1.01);
+            }
+        }
+
         &:last-child {
             margin-bottom: 0;
         }
 
         .timeline-icon {
             position: absolute;
+            z-index: 2;
             left: -75px;
             top: 4px;
             width: 50px;
@@ -106,16 +118,12 @@ $timeline-body-shadow: 1px 3px 9px rgba(0, 0, 0, 0.1);
             text-align: center;
             font-size: 2rem;
             background: $secondary;
+            cursor: pointer;
+            transition: transform 0.6s;
 
             @include breakpoint(mobile, max) {
                 top: -10px;
                 left: 0px;
-            }
-            i {
-                position: absolute;
-                left: 50%;
-                top: 50%;
-                transform: translate(-50%, -50%);
             }
 
             & > svg {
@@ -137,6 +145,7 @@ $timeline-body-shadow: 1px 3px 9px rgba(0, 0, 0, 0.1);
 
             @include breakpoint(mobile, max) {
                 padding: 1rem;
+                border-radius: calc(#{$timeline-body-round}* 3);
             }
 
             @include breakpoint(tablet, min) {
@@ -153,6 +162,10 @@ $timeline-body-shadow: 1px 3px 9px rgba(0, 0, 0, 0.1);
                 }
             }
 
+            & > p:first-of-type {
+                font-size: 1.3rem;
+            }
+
             & > p {
                 margin-bottom: 1rem;
             }
@@ -167,7 +180,8 @@ $timeline-body-shadow: 1px 3px 9px rgba(0, 0, 0, 0.1);
                 padding: 10px;
                 padding-left: 0;
 
-                & > svg {
+                & > div,
+                svg {
                     width: 2.5rem;
                     height: 2.5rem;
                 }
@@ -201,10 +215,18 @@ $timeline-body-shadow: 1px 3px 9px rgba(0, 0, 0, 0.1);
                 }
 
                 & > a {
+                    padding: 4px 8px;
+                    border-radius: 3px;
+                    display: flex;
+
+                    font-size: 12px;
+                    font-weight: bold;
                     text-decoration: none;
-                    color: inherit;
+
                     cursor: pointer;
                     transition: transform 0.1s;
+                    color: inherit;
+                    background: $secondary;
 
                     &:hover,
                     &:active,
@@ -215,11 +237,15 @@ $timeline-body-shadow: 1px 3px 9px rgba(0, 0, 0, 0.1);
                         transform: scale(1.05);
                     }
 
-                    background: $secondary;
-                    padding: 4px 8px;
-                    border-radius: 3px;
-                    font-size: 12px;
-                    font-weight: bold;
+                    & > svg {
+                        height: 1rem;
+                        width: 1rem;
+                        margin-left: 1rem;
+
+                        path {
+                            stroke: white;
+                        }
+                    }
                 }
 
                 .badge {
@@ -230,10 +256,11 @@ $timeline-body-shadow: 1px 3px 9px rgba(0, 0, 0, 0.1);
                     font-weight: bold;
                 }
 
-                & > svg {
+                & > div,
+                svg {
                     width: 1.5rem;
                     height: 1.5rem;
-                    margin-left: 1.5rem;
+                    margin-left: 0.8rem;
                 }
             }
 
@@ -290,4 +317,75 @@ $timeline-body-shadow: 1px 3px 9px rgba(0, 0, 0, 0.1);
 
 .underline {
     text-decoration: underline;
+}
+
+/** Shine effect
+ * Effect appears only once when component is hovered the first time 
+ * @usage 
+ *      (js) const [shined, setShined] = useState(false); 
+ *      (jsx) className={s('shine-effect', { shined })}
+ */
+.shine-effect {
+    position: relative;
+    overflow: hidden;
+
+    background-image: linear-gradient(270deg, #8e9ac2, #42579a);
+    background-size: 400% 400%;
+    animation: TransitioningBackground 10s ease infinite;
+    transition: 0.6s;
+
+    &::before,
+    &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        transform: translateX(-400px) skewX(-15deg);
+    }
+
+    &::before {
+        background: rgba(255, 255, 255, 0.5);
+        width: 60px;
+        height: 100%;
+        filter: blur(30px);
+    }
+
+    &::after {
+        background: rgba(255, 255, 255, 0.2);
+        width: 30px;
+        height: 100%;
+        filter: blur(5px);
+    }
+
+    &.shined {
+        background-image: linear-gradient(to left, #2d8fe5, #d155b8);
+
+        &::before,
+        &::after {
+            transform: translateX(1000px) skewX(-15deg);
+            transition: 0.7s;
+        }
+    }
+}
+
+@keyframes TransitioningBackground {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+    transition-delay: 0.3s;
+}
+
+.fade-in-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0s;
 }

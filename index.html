@@ -5,12 +5,25 @@
         <link rel="icon" type="image/svg+xml" href="/vite.svg" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;300;400;800&family=PT+Sans&family=Roboto&display=swap" rel="stylesheet" />
+        <!-- <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;300;400;800&family=PT+Sans&family=Roboto&display=swap" rel="stylesheet" /> -->
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="./index.css" />
         <title>Portfolio</title>
     </head>
     <body>
         <div id="root"></div>
+        <!-- Initial Animated Loader while packages load (react-three-fiber is big) -->
+        <div id="initial-loader">
+            <div class="rocket-loader">
+                <div class="rocket">
+                    <div class="rocket-extras"></div>
+                    <div class="jet">
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
         <script type="module" src="/src/main.tsx"></script>
     </body>
 </html>

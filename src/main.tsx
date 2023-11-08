@@ -7,6 +7,9 @@ import { App, endpoints } from './app.container.tsx';
 import { Landing } from './pages/landing/landing.page.tsx';
 
 import './main.scss';
+import 'aos/dist/aos.css';
+import 'tippy.js/dist/tippy.css';
+import './styles/tippy.scss';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>

@@ -1,0 +1,231 @@
+#initial-loader {
+    position: absolute;
+    left: 50%;
+    top: 70%;
+    transform: translateX(-50%);
+
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+
+    opacity: 0;
+    animation: fadeIn 2s forwards;
+    transition: opacity 2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+#initial-loader .rocket-loader {
+    animation: moveParticles 6s linear infinite;
+    background: linear-gradient(90deg, gray, transparent 10%) 0 20%/180% 0.2rem repeat-x, linear-gradient(90deg, gray, transparent 20%) 0 80%/150% 0.2rem repeat-x,
+        linear-gradient(90deg, gray, transparent 5%) 0 65%/100% 0.2rem repeat-x, linear-gradient(90deg, gray, transparent 5%) 0 40%/220% 0.2rem repeat-x, linear-gradient(0, white, white);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    box-shadow: inset 0 0 60px 0 rgba(0, 0, 0, 0.1);
+    height: 125px;
+    left: 50%;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 125px;
+}
+
+/* Loading text */
+#initial-loader .rocket-loader::before {
+    content: 'Loading...';
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 110%;
+    bottom: 6%;
+    height: 3rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* color: white;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; */
+
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 0.2em 0.5em;
+    border-radius: 10px;
+
+    font-size: 12px;
+    animation: blink 2s infinite, updateText 30s steps(1, end) infinite;
+}
+
+@keyframes blink {
+    0%,
+    100% {
+        color: black;
+    }
+    50% {
+        color: rgb(122, 122, 122);
+    }
+}
+
+@keyframes updateText {
+    0%,
+    20% {
+        content: 'Loading...';
+    }
+    20%,
+    40% {
+        content: '🚀 Flying through space...';
+    }
+    40%,
+    100% {
+        content: 'Seems a bit slow...';
+    }
+}
+
+@keyframes moveParticles {
+    100% {
+        background-position-x: -500rem;
+    }
+}
+#initial-loader .rocket {
+    animation: moveRocket 2s linear infinite;
+    background: lightgray;
+    background: linear-gradient(#900, red, #900);
+    border-left: 3px solid rgba(0, 0, 0, 0.4);
+    border-radius: 50%/30%;
+    height: 15%;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 35%;
+}
+#initial-loader .rocket::before,
+#initial-loader .rocket::after {
+    content: '';
+    position: absolute;
+}
+#initial-loader .rocket::before {
+    animation: rotateFins 1s infinite;
+    background: #bababa;
+    background: linear-gradient(#900, red, #900);
+    border: 2px solid transparent;
+    border-radius: 0 50% 50% 0;
+    height: 140%;
+    top: 50%;
+    transform: translate(0, -50%);
+    left: 6px;
+    width: 20%;
+}
+#initial-loader .rocket::after {
+    border: 7px solid transparent;
+    border-left: 14px solid rgba(0, 0, 0, 0.4);
+    border-radius: 15%;
+    right: -16px;
+    top: 2px;
+}
+#initial-loader .rocket-extras {
+    animation: moveExtras 1s infinite;
+    background: rgba(0, 0, 0, 0.4);
+    height: 2px;
+    left: 12px;
+    margin: -2px 0 0;
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    width: 10px;
+}
+#initial-loader .rocket-extras::before,
+#initial-loader .rocket-extras::after {
+    content: '';
+    position: absolute;
+}
+#initial-loader .rocket-extras::before {
+    background: white;
+    border-radius: 50%;
+    height: 5px;
+    right: -7px;
+    top: -1px;
+    width: 5px;
+}
+#initial-loader .rocket-extras::after {
+    background: #c00;
+    border-top: 1px solid #600;
+    height: 1px;
+    left: -10px;
+    top: 1px;
+    width: 6px;
+}
+@keyframes moveRocket {
+    0%,
+    100% {
+        transform: translate(-50%, calc(-50% - 1rem));
+    }
+    50% {
+        transform: translate(-50%, calc(-50% + 1rem));
+    }
+}
+@keyframes rotateFins {
+    0%,
+    100% {
+        height: 140%;
+    }
+    50% {
+        border-top: 2px solid #600;
+        border-bottom: 2px solid #600;
+        height: 110%;
+    }
+}
+@keyframes moveExtras {
+    0%,
+    100% {
+        transform: translate(0, calc(-50% + 0.1rem));
+    }
+    50% {
+        transform: translate(0, calc(-50% - 0.1rem));
+    }
+}
+#initial-loader .jet {
+    height: 10px;
+    left: -10px;
+    position: absolute;
+    top: calc(50% - 5px);
+    width: 10px;
+}
+#initial-loader .jet::before,
+#initial-loader .jet::after,
+#initial-loader .jet span {
+    animation: moveSmoke 0.3s infinite;
+    background: #e09100;
+    border-radius: 50%;
+    content: '';
+    filter: blur(2px);
+    height: 8px;
+    left: -6px;
+    opacity: 1;
+    position: absolute;
+    transform: translate(0, 0) scale(1);
+    top: 1px;
+    width: 15px;
+}
+#initial-loader .jet::after {
+    animation-delay: 0.1s;
+}
+#initial-loader .jet span {
+    animation-delay: 0.2s;
+}
+@keyframes moveSmoke {
+    100% {
+        filter: blur(3px);
+        opacity: 0;
+        transform: translate(-40px, 0) scale(2);
+    }
+}
+
+#initial-loader.fade-out {
+    opacity: 0;
+}
