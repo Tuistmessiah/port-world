@@ -7,9 +7,12 @@ interface ControlState {
     isListeningToScroll: boolean;
 }
 
+export type Endpoints = '/' | '/about' | '/projects' | '/career' | '/attr';
+export type Sections = 'academia' | 'novabase' | 'aruki' | 'elanza' | 'thepeoplegroup';
+
 export interface PageState {
-    endpoint: '/' | '/about' | '/projects' | '/career';
-    section?: 'academia' | 'novabase' | 'aruki' | 'elanza' | 'thepeoplegroup';
+    endpoint: Endpoints;
+    section?: Sections;
     moving?: boolean;
     orbitControls?: boolean;
 }

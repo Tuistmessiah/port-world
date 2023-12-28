@@ -27,9 +27,11 @@ import NLSvg from '../../assets/svgs/netherlands-holland-svgrepo-com.svg?react';
 import DockerSvg from '../../assets/svgs/docker-svgrepo-com.svg?react';
 import PTSvg from '../../assets/svgs/flag-for-portugal-svgrepo-com.svg?react';
 import LinkSvg from '../../assets/svgs/link-alt-svgrepo-com.svg?react';
+import ArrowLeft from '../../assets/svgs/arrow-sm-left-svgrepo-com.svg?react';
 
 import { StyleUtils } from '../../utils/style.utils';
 import style from './career.module.scss';
+import { ButtonSvg } from '../../components/button-svg/button-svg.component';
 const s = StyleUtils.styleMixer(style);
 
 export function Career() {
@@ -72,20 +74,37 @@ export function Career() {
         }
     }
 
+    // TODO: Place sections inside a single component class with parameters
+
     return (
         <div className={s('container')}>
+            <Tippy content={'Back to Career View'} theme={'dark'} arrow={false} delay={[700, null]}>
+                <div className={s('career-btn')}>
+                    {!!page.section && (
+                        <ButtonSvg
+                            Svg={<ArrowLeft />}
+                            onClick={() => {
+                                setPage({ ...page, section: undefined });
+                            }}
+                        />
+                    )}
+                </div>
+            </Tippy>
+
             <div className={s('scroll-container')} ref={scrollRef}>
                 <div className={s('timeline')}>
                     <div className={s('timeline-container')} ref={academiaRef}>
                         <FadeInSection>
-                            <div
-                                className={s('timeline-icon', 'subscribe-button')}
-                                onClick={() => {
-                                    setPage({ endpoint: '/career', section: 'academia' });
-                                }}
-                            >
-                                <BookSvg />
-                            </div>
+                            <Tippy content={'Go to Academica Castle 🏰'} theme={'dark'} arrow={false}>
+                                <div
+                                    className={s('timeline-icon', 'subscribe-button')}
+                                    onClick={() => {
+                                        setPage({ endpoint: '/career', section: 'academia' });
+                                    }}
+                                >
+                                    <BookSvg />
+                                </div>
+                            </Tippy>
                             <div
                                 className={s('timeline-body', 'shine-effect', { shined: shined.academia })}
                                 onMouseOver={() => setShined((shined) => ({ ...shined, academia: true }))}
@@ -141,9 +160,16 @@ export function Career() {
                     </div>
                     <div className={s('timeline-container')} ref={novabaseRef}>
                         <FadeInSection>
-                            <div className={s('timeline-icon')}>
-                                <AngularSvg />
-                            </div>
+                            <Tippy content={'Go to Novabase Automations 🛠️'} theme={'dark'} arrow={false}>
+                                <div
+                                    className={s('timeline-icon')}
+                                    onClick={() => {
+                                        setPage({ endpoint: '/career', section: 'novabase' });
+                                    }}
+                                >
+                                    <AngularSvg />
+                                </div>
+                            </Tippy>
                             <div
                                 className={s('timeline-body', 'shine-effect', { shined: shined.novabase })}
                                 onMouseOver={() => setShined((shined) => ({ ...shined, novabase: true }))}
@@ -157,9 +183,7 @@ export function Career() {
                                         <LinkSvg />
                                     </a>
                                 </h4>
-                                <p>
-                                    <strong>TLDR</strong>: Developed backoffice service from scratch to manage data and workflow from different departments. Fullstack.
-                                </p>
+                                <p className={s('abstract')}>Developed backoffice service from scratch to manage data and workflow from different departments. Fullstack.</p>
                                 <p>
                                     As a <strong className={s('underline')}>Web Consultant</strong> for a prominent advertisement firm, GroupM, I played a pivotal role in the conception and
                                     realization of their sophisticated internal back-office system. This initiative was critical to managing their multiple departments, each intertwined with intricate
@@ -200,9 +224,16 @@ export function Career() {
                     </div>
                     <div className={s('timeline-container')}>
                         <FadeInSection>
-                            <div className={s('timeline-icon')}>
-                                <SushiSvg />
-                            </div>
+                            <Tippy content={'Go to Aruki Sushi Island 🥢'} theme={'dark'} arrow={false}>
+                                <div
+                                    className={s('timeline-icon')}
+                                    onClick={() => {
+                                        setPage({ endpoint: '/career', section: 'aruki' });
+                                    }}
+                                >
+                                    <SushiSvg />
+                                </div>
+                            </Tippy>
                             <div
                                 className={s('timeline-body', 'shine-effect', { shined: shined.aruki })}
                                 onMouseOver={() => setShined((shined) => ({ ...shined, aruki: true }))}
@@ -216,9 +247,9 @@ export function Career() {
                                         <LinkSvg />
                                     </a>
                                 </h4>
-                                <p>
-                                    <strong>TLDR</strong>: Worked with a sushi restaurant to develop a backoffice system to manage their workforce and streamline backend processes for ordering. React
-                                    FE. Freelanced also other small projects.
+                                <p className={s('abstract')}>
+                                    Worked with a sushi restaurant to develop a backoffice system to manage their workforce and streamline backend processes for ordering. React FE. Freelanced also
+                                    other small projects.
                                 </p>
                                 <p>
                                     During my freelancing tenure, I spearheaded a digital transformation project for a renowned sushi restaurant aiming to optimize their internal operations.
@@ -245,9 +276,16 @@ export function Career() {
                     </div>
                     <div className={s('timeline-container')} ref={elanzaRef}>
                         <FadeInSection>
-                            <div className={s('timeline-icon')}>
-                                <WheelChairSvg />
-                            </div>
+                            <Tippy content={'Go to Elanza Care Park 🩺'} theme={'dark'} arrow={false}>
+                                <div
+                                    className={s('timeline-icon')}
+                                    onClick={() => {
+                                        setPage({ endpoint: '/career', section: 'elanza' });
+                                    }}
+                                >
+                                    <WheelChairSvg />
+                                </div>
+                            </Tippy>
                             <div
                                 className={s('timeline-body', 'shine-effect', { shined: shined.elanza })}
                                 onMouseOver={() => setShined((shined) => ({ ...shined, elanza: true }))}
@@ -266,9 +304,8 @@ export function Career() {
                                         </div>
                                     </Tippy>
                                 </h4>
-                                <p>
-                                    <strong>TLDR</strong>: Helped a startup with a platform for NL healthcare workers with authentication, invoicing, email generation, UI and stack migration. React
-                                    FE, Node BE.
+                                <p className={s('abstract')}>
+                                    Helped a startup with a platform for NL healthcare workers with authentication, invoicing, email generation, UI and stack migration. React FE, Node BE.
                                 </p>
                                 <p>
                                     In an ambitious startup focused on streamlining the engagement of freelancing professionals within the Dutch healthcare system, I took on a significant role as a
@@ -322,9 +359,16 @@ export function Career() {
                     </div>
                     <div className={s('timeline-container')} ref={thepeoplegroupRef}>
                         <FadeInSection>
-                            <div className={s('timeline-icon')}>
-                                <MapSvg />
-                            </div>
+                            <Tippy content={'Go to GIS Map town 🗺️'} theme={'dark'} arrow={false}>
+                                <div
+                                    className={s('timeline-icon')}
+                                    onClick={() => {
+                                        setPage({ endpoint: '/career', section: 'thepeoplegroup' });
+                                    }}
+                                >
+                                    <MapSvg />
+                                </div>
+                            </Tippy>
                             <div
                                 className={s('timeline-body', 'shine-effect', { shined: shined.gis })}
                                 onMouseOver={() => setShined((shined) => ({ ...shined, gis: true }))}
@@ -338,9 +382,7 @@ export function Career() {
                                         <LinkSvg />
                                     </a>
                                 </h4>
-                                <p>
-                                    <strong>TLDR</strong>: Lead frontend developer for a web map application. Multiple FE frameworks. Nest BE. API Integrations.
-                                </p>
+                                <p className={s('abstract')}>Lead frontend developer for a web map application. Multiple FE frameworks. Nest BE. API Integrations.</p>
                                 <p>
                                     In my current role, I've had the privilege of pioneering the development of a cutting-edge web map application, architected from the ground up. This application
                                     leverages the capabilities of a third-party GIS software, seamlessly integrated into a robust frontend framework composed of React, TypeScript, Redux, and

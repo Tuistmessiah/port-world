@@ -13,6 +13,11 @@ declare module '*.JPG' {
     export default img;
 }
 
+declare module '*.PNG' {
+    const img: string;
+    export default img;
+}
+
 declare module '*.glsl' {
     const value: string;
     export default value;

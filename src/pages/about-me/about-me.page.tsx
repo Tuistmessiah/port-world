@@ -1,28 +1,17 @@
-// import { useEffect, useState } from 'react';
-// import { useSelector } from 'react-redux';
-
-import { StyleUtils } from '../../utils/style.utils';
-
-// import { AppState } from '../../data/interfaces/redux/redux.interface';
+import { useRecoilState } from 'recoil';
+import { deviceState } from '../../data/recoil/atoms/session.atoms';
 
 import GretWallSvg from '../../assets/svgs/great-wall-svgrepo-com.svg?react';
 import ChristSvg from '../../assets/svgs/christ-the-redeemer-svgrepo-com.svg?react';
 import WindmillSvg from '../../assets/svgs/windmill-mill-svgrepo-com.svg?react';
 import TulipSvg from '../../assets/svgs/tulip-svgrepo-com.svg?react';
 
+import { StyleUtils } from '../../utils/style.utils';
 import style from './about-me.module.scss';
 const s = StyleUtils.styleMixer(style);
 
-export interface AboutMeProps {}
-
-const defaultProps = {} as Required<AboutMeProps>;
-
-export function AboutMe(props: AboutMeProps) {
-    const {} = { ...defaultProps, ...props };
-
-    // const SOMETHING = useSelector((state: AppState) => state.session.SOMETHING);
-
-    // const [STATE, SETSTATE] = useState();
+export function AboutMe() {
+    const [device] = useRecoilState(deviceState);
 
     return (
         <div className={s('container')}>
@@ -31,14 +20,15 @@ export function AboutMe(props: AboutMeProps) {
                     <section>
                         <h1>About Me</h1>
                         <p>
-                            I’m a developer and physicist, crafting interactive web applications with a focus on frontend, data management, and 3D visualizations since 2018, ensuring seamless user
-                            experiences
+                            I’m a developer and worked as a researcher in the past. Crafting interactive web applications with a focus on frontend and data management ensuring seamless user
+                            experiences since 2016. Looking for more opportunities with 3D visualizations.
                         </p>
-
-                        <div className={s('vertical-line')}>
-                            <p>Scroll</p>
-                            <div />
-                        </div>
+                        {(device === 'mobile' || device === 'tablet') && (
+                            <div className={s('vertical-line')}>
+                                <p>Scroll</p>
+                                <div />
+                            </div>
+                        )}
                     </section>
                     <section>
                         <div className={s('svg-spot')}>
@@ -50,15 +40,14 @@ export function AboutMe(props: AboutMeProps) {
                             </div>
                         </div>
                         <p>
-                            While the bustling streets of Lisbon, Portugal, may not be synonymous with the tech hubs of the world, they provided me with a unique backdrop to dive into the realms of
-                            development, engineering, and physics. My journey in the digital world began in 2018, amidst the charm of historic facades and the rhythm of traditional music that echoed
-                            through my involvement in a special university music group.
+                            Even though Lisbon is not known like the tech hubs of the world, living in these streets and studying in my university there provided me with a unique backdrop into program
+                            development, engineering, and physics. After a period of studying, participating in a traditional musical group and enjoying student life, with some travels in the mix, I
+                            worked as a researcher in physics and 3D (2016-2018). My journey in the web world began in 2018 and still continues today.
                         </p>
                         <p>
-                            With a competitive swimming background and a degree in Physics Engineering in hand, I found myself drawn to the intricate dance of code and the boundless potential of the
-                            web. My expertise lies in web-app development, frontend intricacies, and the specialization in graphic maps and 3D visualizations.
+                            With a competitive swimming background and a degree in Physics Engineering in hand, I found myself drawn to the mechanisms and the potential of the web. My expertise lies
+                            in web-app development, frontend intricacies, and the specialization in graphic maps and, recently, 3D visualizations.
                         </p>
-
                         <div className={s('svg-spot')}>
                             <div id={s('windmill-svg')}>
                                 <WindmillSvg />
@@ -69,10 +58,9 @@ export function AboutMe(props: AboutMeProps) {
                                 <TulipSvg />
                             </div>
                         </div>
-
                         <p>
-                            Seeking adventures beyond the scenic views of Lisbon, I packed my bags and set my sights on the Netherlands. Here, I embraced freelancing, which allowed me the freedom to
-                            explore the depths of East Asia while contributing to a GIS project based in Utrecht.
+                            Seeking adventures beyond my little rectangle of a country, I packed my bags and set my sights on the Netherlands. Here, I had the opportunity to work with new
+                            technologies, embrace freelancing and work remotely which allowed me to explore the beauty of East Asia while contributing to a GIS project based in Utrecht.
                         </p>
                     </section>
                     <section>
@@ -83,14 +71,15 @@ export function AboutMe(props: AboutMeProps) {
                         </p>
                         <h2>Love of Languages</h2>
                         <p>
-                            Languages have always fascinated me, and I'm not just talking about programming languages like Javascript and C#. Fluent in Portuguese, English, Spanish, and French, I find
-                            joy in unraveling the complexities of communication. These days, I'm immersing myself in the challenge of learning Mandarin, with Taiwan holding a special place in my heart
-                            as my second home.
+                            Languages have always fascinated me, and I'm not just talking about programming languages like Javascript and C#. Fluent in Portuguese, English, Spanish, and French, with
+                            some touches in Dutch. I find joy in unraveling the complexities of communication. These days, I'm immersing myself in the challenge of learning Mandarin, with Taiwan
+                            holding a special place in my heart.
                         </p>
 
                         <p>
-                            Living a life enriched by diverse cultures, languages, and codes, I continue to weave my story, one line of code and one conversation at a time, from the picturesque
-                            landscapes of Lisbon to the vibrant energy of the Netherlands and the captivating allure of East Asia.
+                            Living a life enriched by diverse cultures, languages, and codes, I continue to make my story, one line of code and one conversation at a time. Travel is a deep passion for
+                            me, from the landscapes of Lisbon to the vibrant energy of the Netherlands and the captivating allure of East Asia. I make my adventure where I go and especially with the
+                            people I meet :).
                         </p>
                         {/* <p>
                     Hello! I'm a free-spirited extrovert hailing from the enchanting city of Lisbon, Portugal. Although my adventure began with Physics Engineering at [University Name], it's

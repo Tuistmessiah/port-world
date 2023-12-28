@@ -30,11 +30,11 @@ export function WaterShader(props: WaterShaderProps) {
 
     useInit(() => {
         const params = {
-            foamColor: 0xffffff,
-            waterColor: 0x1177e5,
+            foamColor: 0x6174ff,
+            waterColor: 0x144bff, // #73ef2 - #6174ff
             threshold: 0.4,
         };
-        const dudvMap = new THREE.TextureLoader().load('https://i.imgur.com/hOIsXiZ.png');
+        const dudvMap = new THREE.TextureLoader().load('/textures/foam-pattern.png');
         dudvMap.wrapS = dudvMap.wrapT = THREE.RepeatWrapping;
 
         const sphereGeometry = new THREE.SphereGeometry(10.1, 32, 32);
@@ -50,15 +50,14 @@ export function WaterShader(props: WaterShaderProps) {
         const shaderMaterial = new THREE.ShaderMaterial({
             defines: {
                 DEPTH_PACKING: 1,
-                ORTHOGRAPHIC_CAMERA: 0, // Set this to 1 if you're using an orthographic camera
+                ORTHOGRAPHIC_CAMERA: 0,
             },
             vertexShader: waterVertexShader,
             fragmentShader: waterFragmentShader,
+            transparent: true,
             uniforms: {
-                tDepth: { value: renderTarget.depthTexture }, // or renderTarget.texture if depthTexture is not supported
-                tDudv: { value: dudvMap }, // assuming dudvMap is already loaded and available
-                // waterColor: { value: new THREE.Color(params.waterColor) },
-                // foamColor: { value: new THREE.Color(params.foamColor) },
+                tDepth: { value: renderTarget.depthTexture },
+                tDudv: { value: dudvMap },
                 waterColor: { value: new THREE.Color(params.foamColor) },
                 foamColor: { value: new THREE.Color(params.waterColor) },
                 cameraNear: { value: rootState.camera.near },
@@ -68,19 +67,17 @@ export function WaterShader(props: WaterShaderProps) {
                 foamIntensity: { value: 0.1 },
                 resolution: { value: new THREE.Vector2(window.innerWidth * pixelRatio, window.innerHeight * pixelRatio) },
             },
-            // Add any other necessary shader parameters here
         });
 
-        const temMaterial = new THREE.MeshLambertMaterial({ color: '#36ABE7' });
-        localState.current.sphere = new THREE.Mesh(sphereGeometry, temMaterial);
+        localState.current.sphere = new THREE.Mesh(sphereGeometry, shaderMaterial);
         localState.current.sphere.position.x = 0;
         rootState.scene.add(localState.current.sphere);
 
-        // // Update uniforms for the sphere
-        // localState.current.sphere.material.uniforms.threshold.value = params.threshold;
-        // localState.current.sphere.material.uniforms.foamColor.value.set(params.waterColor);
-        // localState.current.sphere.material.uniforms.waterColor.value.set(params.foamColor);
-        // localState.current.sphere.material.uniforms.foamIntensity.value = 0.1;
+        // Update uniforms for the sphere
+        localState.current.sphere.material.uniforms.threshold.value = params.threshold;
+        localState.current.sphere.material.uniforms.foamColor.value.set(params.waterColor);
+        localState.current.sphere.material.uniforms.waterColor.value.set(params.foamColor);
+        localState.current.sphere.material.uniforms.foamIntensity.value = 0.1;
 
         // box middle
         const boxMaterial = new THREE.MeshLambertMaterial({ color: 0xea4d10 });
@@ -92,7 +89,10 @@ export function WaterShader(props: WaterShaderProps) {
     });
 
     useFrame((state, delta) => {
-        // localState.current.sphere.material.uniforms.time.value += delta * 0.1;
+        if (localState.current.sphere) {
+            localState.current.sphere.rotation.y += delta * 0.001;
+            localState.current.sphere.material.uniforms.time.value += delta * 0.1;
+        }
     });
 
     return null;

@@ -10,6 +10,51 @@ $size-box: 4rem;
 
     margin: 2rem;
 
+    opacity: 0;
+    animation: fadeIn ease-out 2s forwards;
+
+    @include breakpoint(tablet, max) {
+        bottom: unset;
+        top: 0;
+        right: 0;
+        left: unset;
+    }
+
+    @include breakpoint(mobile, max) {
+        top: 32.5vh;
+        margin: 0rem;
+
+        &:not(.bottom).container > ul > li > a {
+            width: calc(#{$size-box}/ 2);
+            height: calc(#{$size-box}/ 2);
+            margin-right: calc(#{$size-box}/ 4);
+            line-height: calc(#{$size-box}/ 2);
+
+            & > svg {
+                width: 60%;
+                height: 60%;
+            }
+
+            & span:nth-child(1),
+            & span:nth-child(3) {
+                height: 1px;
+            }
+        }
+
+        &.bottom {
+            top: unset;
+            bottom: 1rem;
+            right: unset;
+            left: 1rem;
+
+            &.container > ul > li > a {
+                width: calc(#{$size-box}* 0.7);
+                height: calc(#{$size-box}* 0.7);
+                margin-right: calc(#{$size-box}/ 4);
+            }
+        }
+    }
+
     // Elements styling
     ul {
         display: flex;
@@ -17,8 +62,13 @@ $size-box: 4rem;
         padding: 0;
 
         li {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
             list-style: none;
 
+            // Animated links
             a {
                 position: relative;
                 width: $size-box;
@@ -48,7 +98,7 @@ $size-box: 4rem;
                     height: 60%;
                 }
 
-                &.linkedin:hover {
+                &#linkedin:hover {
                     color: #0f4c6d;
                     span {
                         background: #0f4c6d;
@@ -57,7 +107,7 @@ $size-box: 4rem;
                         fill: #0f4c6d;
                     }
                 }
-                &.github:hover {
+                &#github:hover {
                     color: #161414;
                     span {
                         background: #161414;
@@ -66,13 +116,45 @@ $size-box: 4rem;
                         fill: #161414;
                     }
                 }
-                &.gmail:hover {
+                &#gmail:hover {
                     color: #e34133;
                     span {
                         background: #e34133;
                     }
                     path {
                         fill: #e34133;
+                    }
+                }
+            }
+
+            // Svg
+            .svg {
+                width: $size-box;
+                height: $size-box;
+
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+
+                transform: translateY(-1px);
+                cursor: pointer;
+
+                &:hover {
+                    & > svg {
+                        transform: scale(1.1);
+
+                        & > path {
+                            fill: rgb(255, 255, 255);
+                        }
+                    }
+                }
+
+                & > svg {
+                    width: 70%;
+                    height: 70%;
+
+                    & > path {
+                        fill: rgb(202, 202, 202);
                     }
                 }
             }

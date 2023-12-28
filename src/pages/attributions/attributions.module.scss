@@ -1,0 +1,134 @@
+@import '../../styles/imports.scss';
+
+.container {
+    position: fixed;
+    z-index: 4;
+
+    & > div {
+        padding: 2rem;
+        padding-top: 1.4rem;
+        border: 1px solid transparent;
+        border-radius: 10px;
+
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+
+        opacity: 0;
+        animation: fadeIn ease-out 0.2s forwards;
+
+        color: white;
+        background-color: rgba(36, 36, 36, 0.95);
+
+        @include breakpoint(mobile, max) {
+            padding: 1rem;
+            padding-top: 0.5rem;
+            .attribution.attribution {
+                gap: 1rem;
+            }
+        }
+
+        .attribution {
+            width: 100%;
+
+            display: flex;
+            gap: 3rem;
+
+            .host {
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+
+                .license {
+                    height: 4rem;
+                    display: flex;
+                    align-items: center;
+
+                    & > svg {
+                        width: 2rem;
+                        height: 2rem;
+                        justify-self: flex-start;
+
+                        transform: translateY(-10%);
+
+                        path {
+                            fill: white;
+                        }
+                    }
+                    & > div {
+                        flex-grow: 1;
+                        a {
+                            float: right;
+                        }
+                    }
+                }
+                .website {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    a {
+                        padding-right: 2rem;
+                    }
+                    img {
+                        width: 8rem;
+                        height: 3rem;
+                        object-fit: contain;
+                    }
+                }
+            }
+            .asset {
+                flex-basis: 7rem;
+
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                gap: 1rem;
+            }
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+                opacity: 0.8;
+            }
+            &:active {
+                opacity: 0.6;
+            }
+            &:focus {
+                outline: 2px solid white;
+                outline-offset: 2px;
+            }
+        }
+    }
+
+    .models {
+        position: fixed;
+        z-index: 2;
+        top: 10rem;
+        left: 10rem;
+        width: 50rem;
+        max-width: 90vw;
+        max-height: 40vh;
+
+        font-size: 1rem;
+
+        @include breakpoint(mobile, max) {
+            left: 2rem;
+        }
+    }
+    .multimedia {
+        position: fixed;
+        z-index: 2;
+        bottom: 10rem;
+        right: 10rem;
+        width: 50rem;
+        max-width: 90vw;
+        max-height: 50vh;
+        @include breakpoint(mobile, max) {
+            right: 2rem;
+        }
+    }
+}

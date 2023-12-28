@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import * as THREE from 'three';
 import { useThree } from '@react-three/fiber';
+import { useInit } from '../../hooks/use-init.hook';
 
 export interface StarSphereProps {}
 
@@ -13,7 +14,7 @@ export function StarSphere(props: StarSphereProps) {
     const parameters: any = {};
     parameters.count = 10000;
     parameters.size = 2;
-    parameters.radius = 500;
+    parameters.radius = 1000;
     parameters.branches = 3;
     parameters.spin = 1;
     parameters.randomness = 0.2;
@@ -26,6 +27,7 @@ export function StarSphere(props: StarSphereProps) {
     let points: any = null;
 
     useEffect(() => {
+        // TODO: Make them appear smoothly
         generateGalaxy(points, geometry, material, scene, parameters);
     }, []);
 

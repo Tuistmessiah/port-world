@@ -6,8 +6,8 @@ export function Landing() {
     return (
         <div className={s('container')}>
             <section>
-                <h1>Pedro C.</h1>
-                <p>Web Developer by day. 3D enthusiast by night.</p>
+                <h1>Pedro Caetano</h1>
+                <p>Software Engineer by day.</p>
                 <p>Welcome to my digital space. Dive in and explore!</p>
             </section>
         </div>

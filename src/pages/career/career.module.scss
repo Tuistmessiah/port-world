@@ -20,6 +20,18 @@ $timeline-body-shadow: 1px 3px 9px rgba(0, 0, 0, 0.1);
     height: 100%;
     padding: 1vh;
 
+    & .career-btn {
+        position: absolute;
+        top: 2.3rem;
+        left: -4rem;
+        height: 3rem;
+        width: 3rem;
+
+        & > button {
+            height: 3rem;
+            width: 3rem;
+        }
+    }
     & > h2 {
         height: 3rem;
     }
@@ -82,9 +94,9 @@ $timeline-body-shadow: 1px 3px 9px rgba(0, 0, 0, 0.1);
     }
 
     p {
+        font-size: 16px;
         font-weight: 300;
         line-height: 1.5;
-        font-size: 14px;
         opacity: 0.8;
     }
 
@@ -162,8 +174,9 @@ $timeline-body-shadow: 1px 3px 9px rgba(0, 0, 0, 0.1);
                 }
             }
 
-            & > p:first-of-type {
-                font-size: 1.3rem;
+            & .abstract {
+                font-size: 18px;
+                font-weight: 700;
             }
 
             & > p {
@@ -207,7 +220,7 @@ $timeline-body-shadow: 1px 3px 9px rgba(0, 0, 0, 0.1);
 
             .timeline-title {
                 display: flex;
-                margin-bottom: 3rem;
+                margin-bottom: 2rem;
 
                 @include breakpoint(mobile, max) {
                     margin-left: 4rem;

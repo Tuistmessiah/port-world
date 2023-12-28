@@ -74,6 +74,29 @@ $page-padding: 2rem;
             }
         }
 
+        .btn-toggle {
+            display: flex;
+            align-items: center;
+
+            margin-left: 2rem;
+            @include breakpoint(mobile, max) {
+                margin-left: 0.5rem;
+            }
+            & > button {
+                width: 3rem;
+                height: 3rem;
+                & > svg {
+                    width: 60%;
+                    height: 60%;
+
+                    path {
+                        stroke: white;
+                        fill: white;
+                    }
+                }
+            }
+        }
+
         @include breakpoint(tablet, max) {
             margin: calc(#{$page-padding} / 2);
 
@@ -132,6 +155,7 @@ $page-padding: 2rem;
         }
 
         @include breakpoint(mobile, max) {
+            top: 6rem;
             margin: 0.1rem;
         }
     }
@@ -145,5 +169,61 @@ $page-padding: 2rem;
         background: linear-gradient(180deg, rgba(255, 255, 0, 1) 0%, rgba(49, 2, 125, 1) 0%, rgba(123, 30, 248, 1) 100%);
 
         animation: fadeIn 1s;
+    }
+}
+
+.container {
+    .ui-display {
+        position: fixed;
+        top: 60px; // Adjust based on the height of your navbar
+        left: 50%;
+        transform: translateX(-50%);
+        // background-color: rgba(255, 255, 255, 0.8);
+        padding: 10px 20px;
+        // border-radius: 8px;
+        // box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+
+        &.hidden {
+            display: none;
+        }
+
+        & > p {
+            position: absolute;
+        }
+
+        & > div {
+            width: 4rem;
+            height: 4rem;
+            svg {
+                width: 4rem;
+                height: 4rem;
+
+                & > g > g {
+                    // Right button
+                    & > path:nth-child(1) {
+                        fill: rgba(255, 0, 0, 0.7) !important;
+                    }
+                    // Left button
+                    & > path:nth-child(2) {
+                        fill: rgba(0, 128, 0, 0.7) !important;
+                    }
+                    // Body
+                    & > path:nth-child(3) {
+                        fill: rgba(0, 0, 0, 0.7) !important;
+                    }
+                    // Middle button
+                    & > path:nth-child(4) {
+                        fill: rgba(0, 0, 255, 0.7) !important;
+                    }
+                }
+            }
+        }
+    }
+
+    .copyright {
+        position: absolute;
+        bottom: 2rem;
+        right: 2rem;
     }
 }

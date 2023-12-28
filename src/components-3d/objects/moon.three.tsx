@@ -37,7 +37,8 @@ export function Moon(props: MoonProps) {
     // const [global, setGlobal] = useRecoilState(someState);
     const [state, setState] = useState();
     const localState = useStateObject<LocalState>(initLocalState());
-    const sphereGLTF = useGLTF('./models/sphere-outline/sphere-outline.gltf');
+    // const sphereGLTF = useGLTF('./models/my-moon-asteroids/my-moon-1.gltf');
+
     const sphereGLB = useGLTF(sphereGLBPath);
 
     function initLocalState(): LocalState {
@@ -111,7 +112,7 @@ export function Moon(props: MoonProps) {
         // localState.composer.render();
     });
 
-    return null;
+    return <></>;
 
     function onPointerMove(event: any) {
         if (event.isPrimary === false) return;
