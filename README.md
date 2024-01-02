@@ -1,4 +1,4 @@
-# React + TypeScript + Vite
+# Using a template with React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
@@ -29,3 +29,11 @@ If you are developing a production application, we recommend updating the config
 ## Styling
 
 To check available google fonts installed: https://fonts.google.com/noto/specimen/Noto+Sans
+
+# License
+
+MIT License. Be sure to check the dependencies used. Remember, the MIT license applied to this project covers only the code written. It doesn't re-license the dependencies used. Each dependency retains its original license.
+
+# Disclaimer
+
+This project is still in an early stage, providing an MVP for presentation. There wasn't a specific concern in cleaning comments, unused code at this point. Anything you want to suggest or comment I am available at: pedrocaetano90@gmail.com
