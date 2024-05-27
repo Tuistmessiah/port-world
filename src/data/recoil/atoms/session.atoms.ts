@@ -17,6 +17,11 @@ export interface PageState {
     orbitControls?: boolean;
 }
 
+export const initialLoadState = atom<boolean>({
+    key: 'initialLoadState',
+    default: false,
+});
+
 export const controlState = atom<ControlState>({
     key: 'controlState',
     default: {

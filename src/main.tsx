@@ -20,7 +20,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                         {endpoints().map(({ path, page, name }) => (
                             <Route path={path} element={page} key={name} />
                         ))}
-                        <Route path="/" element={<Landing />} />
                     </Routes>
                 </App>
             </RecoilRoot>

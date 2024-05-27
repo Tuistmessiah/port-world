@@ -3,227 +3,229 @@
 $page-padding: 2rem;
 
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
 
-    color: white;
+  color: white;
+  animation: fadeIn 1s forwards;
+
+  pointer-events: none;
+
+  & > * {
+    pointer-events: all;
+  }
+
+  & > nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    justify-content: center;
+
+    margin: $page-padding;
+    margin-left: 1rem;
+
+    transition: margin-left 500ms;
     animation: fadeIn 1s forwards;
 
-    pointer-events: none;
+    & > button {
+      margin: auto 1rem;
+      padding: 1rem;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      transition: all 0.3s;
 
-    & > * {
-        pointer-events: all;
+      font-size: large;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+
+      color: white;
+      background: transparent;
+
+      &:first-child {
+        margin: auto 1rem;
+        padding: 0;
+
+        &:hover {
+          color: white;
+          background: transparent;
+        }
+      }
+
+      & > svg {
+        width: 5rem;
+        height: 5rem;
+      }
+
+      &:hover {
+        color: white;
+        background-color: rgba(0, 0, 0, 0.5);
+        transform: scale(1.03);
+      }
+
+      &.active {
+        transform: scale(1.15);
+        text-decoration: underline;
+      }
     }
 
-    & > nav {
-        position: absolute;
-        top: 0;
-        left: 0;
+    .btn-toggle {
+      display: flex;
+      align-items: center;
 
-        display: flex;
-        justify-content: center;
+      margin-left: 2rem;
+      @include breakpoint(mobile, max) {
+        margin-left: 0.5rem;
+      }
+      & > button {
+        width: 3rem;
+        height: 3rem;
+        & > svg {
+          width: 60%;
+          height: 60%;
 
-        margin: $page-padding;
-        margin-left: 1rem;
-
-        transition: margin-left 500ms;
-
-        & > button {
-            margin: auto 1rem;
-            padding: 1rem;
-            border: 1px solid transparent;
-            border-radius: 10px;
-            transition: all 0.3s;
-
-            font-size: large;
-            text-decoration: none;
-            font-weight: bold;
-            cursor: pointer;
-
-            color: white;
-            background: transparent;
-
-            &:first-child {
-                margin: auto 1rem;
-                padding: 0;
-
-                &:hover {
-                    color: white;
-                    background: transparent;
-                }
-            }
-
-            & > svg {
-                width: 5rem;
-                height: 5rem;
-            }
-
-            &:hover {
-                color: white;
-                background-color: rgba(0, 0, 0, 0.5);
-                transform: scale(1.03);
-            }
-
-            &.active {
-                transform: scale(1.15);
-                text-decoration: underline;
-            }
+          path {
+            stroke: white;
+            fill: white;
+          }
         }
-
-        .btn-toggle {
-            display: flex;
-            align-items: center;
-
-            margin-left: 2rem;
-            @include breakpoint(mobile, max) {
-                margin-left: 0.5rem;
-            }
-            & > button {
-                width: 3rem;
-                height: 3rem;
-                & > svg {
-                    width: 60%;
-                    height: 60%;
-
-                    path {
-                        stroke: white;
-                        fill: white;
-                    }
-                }
-            }
-        }
-
-        @include breakpoint(tablet, max) {
-            margin: calc(#{$page-padding} / 2);
-
-            & > button {
-                margin: 0.5rem;
-            }
-        }
-
-        @include breakpoint(mobile, max) {
-            width: 100%;
-            z-index: 2;
-            flex-direction: row;
-            justify-content: space-around;
-            align-items: unset;
-            margin: 0;
-
-            & > button {
-                margin: auto 0rem;
-                padding: 0.5rem;
-
-                &:first-child {
-                    margin: 0.5rem;
-                }
-                &:last-child {
-                    margin-right: 1rem;
-                }
-                &.active {
-                    transform: scale(1.05);
-                    text-decoration: underline;
-                }
-            }
-        }
+      }
     }
 
-    .canvas-wrapper {
-        position: relative;
-        z-index: -1;
-        width: 100vw;
-        height: 100vh;
+    @include breakpoint(tablet, max) {
+      margin: calc(#{$page-padding} / 2);
 
-        overflow: hidden;
-        pointer-events: auto;
+      & > button {
+        margin: 0.5rem;
+      }
     }
 
-    .landing-content {
-        position: fixed;
-        top: 10rem;
-        left: 0;
-        margin-left: calc(#{$page-padding} * 2);
-        opacity: 1;
+    @include breakpoint(mobile, max) {
+      width: 100%;
+      z-index: 2;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: unset;
+      margin: 0;
 
-        transition: opacity 2s ease-in-out;
+      & > button {
+        margin: auto 0rem;
+        padding: 0.5rem;
 
-        @include breakpoint(tablet, max) {
-            margin-right: calc(#{$page-padding} * 2);
+        &:first-child {
+          margin: 0.5rem;
         }
-
-        @include breakpoint(mobile, max) {
-            top: 6rem;
-            margin: 0.1rem;
+        &:last-child {
+          margin-right: 1rem;
         }
+        &.active {
+          transform: scale(1.05);
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  .canvas-wrapper {
+    position: relative;
+    z-index: -1;
+    width: 100vw;
+    height: 100vh;
+
+    overflow: hidden;
+    pointer-events: auto;
+  }
+
+  .landing-content {
+    position: fixed;
+    top: 10rem;
+    left: 0;
+    margin-left: calc(#{$page-padding} * 2);
+    opacity: 1;
+
+    transition: opacity 2s ease-in-out;
+    animation: fadeIn 1s forwards;
+
+    @include breakpoint(tablet, max) {
+      margin-right: calc(#{$page-padding} * 2);
     }
 
-    .page-bg {
-        position: absolute;
-        top: 0;
-        z-index: -2;
-        width: 100vw;
-        height: 100vh;
-        background: linear-gradient(180deg, rgba(255, 255, 0, 1) 0%, rgba(49, 2, 125, 1) 0%, rgba(123, 30, 248, 1) 100%);
-
-        animation: fadeIn 1s;
+    @include breakpoint(mobile, max) {
+      top: 6rem;
+      margin: 0.1rem;
     }
+  }
+
+  .page-bg {
+    position: absolute;
+    top: 0;
+    z-index: -2;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(180deg, rgba(255, 255, 0, 1) 0%, rgba(49, 2, 125, 1) 0%, rgba(123, 30, 248, 1) 100%);
+
+    animation: fadeIn 1s;
+  }
 }
 
 .container {
-    .ui-display {
-        position: fixed;
-        top: 60px; // Adjust based on the height of your navbar
-        left: 50%;
-        transform: translateX(-50%);
-        // background-color: rgba(255, 255, 255, 0.8);
-        padding: 10px 20px;
-        // border-radius: 8px;
-        // box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-        z-index: 1000;
+  .ui-display {
+    position: fixed;
+    top: 60px; // Adjust based on the height of your navbar
+    left: 50%;
+    transform: translateX(-50%);
+    // background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px 20px;
+    // border-radius: 8px;
+    // box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
 
-        &.hidden {
-            display: none;
-        }
-
-        & > p {
-            position: absolute;
-        }
-
-        & > div {
-            width: 4rem;
-            height: 4rem;
-            svg {
-                width: 4rem;
-                height: 4rem;
-
-                & > g > g {
-                    // Right button
-                    & > path:nth-child(1) {
-                        fill: rgba(255, 0, 0, 0.7) !important;
-                    }
-                    // Left button
-                    & > path:nth-child(2) {
-                        fill: rgba(0, 128, 0, 0.7) !important;
-                    }
-                    // Body
-                    & > path:nth-child(3) {
-                        fill: rgba(0, 0, 0, 0.7) !important;
-                    }
-                    // Middle button
-                    & > path:nth-child(4) {
-                        fill: rgba(0, 0, 255, 0.7) !important;
-                    }
-                }
-            }
-        }
+    &.hidden {
+      display: none;
     }
 
-    .copyright {
-        position: absolute;
-        bottom: 2rem;
-        right: 2rem;
+    & > p {
+      position: absolute;
     }
+
+    & > div {
+      width: 4rem;
+      height: 4rem;
+      svg {
+        width: 4rem;
+        height: 4rem;
+
+        & > g > g {
+          // Right button
+          & > path:nth-child(1) {
+            fill: rgba(255, 0, 0, 0.7) !important;
+          }
+          // Left button
+          & > path:nth-child(2) {
+            fill: rgba(0, 128, 0, 0.7) !important;
+          }
+          // Body
+          & > path:nth-child(3) {
+            fill: rgba(0, 0, 0, 0.7) !important;
+          }
+          // Middle button
+          & > path:nth-child(4) {
+            fill: rgba(0, 0, 255, 0.7) !important;
+          }
+        }
+      }
+    }
+  }
+
+  .copyright {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+  }
 }

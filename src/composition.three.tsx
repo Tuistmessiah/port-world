@@ -1,9 +1,9 @@
 import * as THREE from 'three';
 import { Line, OrbitControls, OrbitControlsProps } from '@react-three/drei';
 import { useEffect, useRef } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 
-import { pageState } from './data/recoil/atoms/session.atoms';
+import { initialLoadState, pageState } from './data/recoil/atoms/session.atoms';
 
 import { Planet } from './components-3d/objects/planet.object';
 import { MainCam } from './components-3d/main-cam.camera';
@@ -13,6 +13,7 @@ import { ForwardRefComponent } from '@react-three/drei/helpers/ts-utils';
 
 export default function Composition() {
     const [page] = useRecoilState(pageState);
+    const setInitialLoad = useSetRecoilState(initialLoadState);
 
     // const orbitControlsEnabled = !page.orbitControls && page.endpoint === '/' && !page.moving;
     const orbitControlsEnabled = !page.orbitControls && !page.moving;
@@ -20,6 +21,7 @@ export default function Composition() {
     const orbitControlsRef = useRef<any>();
 
     useEffect(() => {
+
         // In index.html
         const loader = document.getElementById('initial-loader');
         if (loader) {
@@ -31,6 +33,7 @@ export default function Composition() {
             }, 20);
             setTimeout(() => {
                 loader.remove();
+                setInitialLoad(true);
             }, 2020); // This should match the duration of your CSS transition
         }
     }, []);
