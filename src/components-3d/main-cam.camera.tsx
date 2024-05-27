@@ -16,6 +16,7 @@ import { Html, OrbitControls } from '@react-three/drei';
 
 import { StyleUtils } from '../utils/style.utils';
 import style from './main-cam.module.scss';
+import { useWheelListener } from '../hooks/use-scroll-listener.hook';
 const s = StyleUtils.styleMixer(style);
 
 function camPoints(device: 'mobile' | 'tablet' | 'laptop' | 'desktop' | 'large' | undefined) {
@@ -99,6 +100,7 @@ const UIPoints = {
  */
 export function MainCam() {
   const navigate = useNavigate();
+  const canvasRef = useRef(null);
 
   const [device] = useRecoilState(deviceState);
   const [page, setPage] = useRecoilState(pageState);

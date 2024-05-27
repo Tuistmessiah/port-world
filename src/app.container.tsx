@@ -1,4 +1,4 @@
-import { ReactElement, lazy, useEffect, useState } from 'react';
+import { ReactElement, lazy, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Canvas, useThree } from '@react-three/fiber';
 import { useRecoilState, useSetRecoilState } from 'recoil';
@@ -29,6 +29,9 @@ import MouseCompSvg from './assets/svgs/computing-mouse-svgrepo-com.svg?react';
 import style from './app.module.scss';
 import { StyleUtils } from './utils/style.utils';
 import { Landing } from './pages/landing/landing.page';
+import { useWheelListener } from './hooks/use-scroll-listener.hook';
+import { useStateRef } from './hooks/use-state-ref.hook';
+import { useMemoIf } from './hooks/use-memo-if.hook';
 const s = StyleUtils.styleMixer(style);
 
 const Composition = lazy(() => import('./composition.three'));
@@ -53,17 +56,19 @@ function RecoilCanvas(props: any) {
 export function App(props: { children: ReactElement }) {
   const navigate = useNavigate();
   const location = useLocation();
+  const canvasRef = useRef(null);
 
   const [page, setPage] = useRecoilState(pageState);
   const [, setDevice] = useRecoilState(deviceState);
   const [initialLoad] = useRecoilState(initialLoadState);
-  // let soundStarted = useStateObject<boolean>(false);
 
   const [navigating, setNavigating] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(false);
   const [freeMove, setFreeMove] = useState(false);
-
   const [isVisible, setIsVisible] = useState(true);
+
+  const prevSection = useMemoIf(() => page.section, [page.section]);
+  useWheelListener(scrolledCanvas, canvasRef);
 
   // Overlay instructions
   useEffect(() => {
@@ -201,6 +206,7 @@ export function App(props: { children: ReactElement }) {
 
         <div className={s('canvas-wrapper')}>
           <Canvas
+            ref={canvasRef}
             camera={{
               fov: 45,
               near: 0.1,
@@ -220,6 +226,17 @@ export function App(props: { children: ReactElement }) {
       <div className={s('page-bg')} />
     </div>
   );
+
+  function scrolledCanvas(direction: 'down' | 'up' | undefined) {
+    if (page.endpoint === '/career') {
+      if (page.section && direction === 'down') {
+        setPage({ endpoint: '/career', section: undefined });
+      }
+      if (!page.section && direction === 'up') {
+        setPage({ endpoint: '/career', section: prevSection });
+      }
+    }
+  }
 
   function handleWindowSizeChange() {
     // Set type of device by size ('mobile' | 'tablet' | 'desktop' | 'large')
