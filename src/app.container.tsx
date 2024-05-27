@@ -104,7 +104,7 @@ export function App(props: { children: ReactElement }) {
   // TODO: 4) Use local variables to make it only appear once (the first time)
   // TODO: 5) Give it glow OR ghost effect
   // TODO: 6) Make svg pan left and right to show the drag
-  console.log(initialLoad);
+
   return (
     <div className={s('container')}>
       <>

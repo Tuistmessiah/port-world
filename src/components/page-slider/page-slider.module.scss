@@ -1,76 +1,76 @@
 @import '../../styles/imports.scss';
 
 .container {
-    position: fixed;
-    z-index: 2;
-    top: 1vh;
-    bottom: 1vw;
-    right: 1vw;
-    width: 0;
-    max-width: 40vw;
+  position: fixed;
+  z-index: 2;
+  top: 1vh;
+  bottom: 1vw;
+  right: 1vw;
+  width: 0;
+  max-width: 40vw;
 
-    border: 1px solid transparent;
-    border-radius: 10px;
+  border: 1px solid transparent;
+  border-radius: 10px;
 
-    animation: fadeIn ease-out 0.5s forwards;
+  animation: fadeIn ease-out 0.5s forwards;
 
-    color: white;
-    background-color: rgba(36, 36, 36, 0.95);
+  color: white;
+  background-color: rgba(36, 36, 36, 0.95);
 
-    -webkit-animation: slide 1.5s forwards;
-    -webkit-animation-delay: 0.5s;
-    animation: slide 1s forwards;
-    animation-delay: 0.5s;
+  -webkit-animation: slide 1.5s forwards;
+  -webkit-animation-delay: 0.5s;
+  animation: slide 1s forwards;
+  animation-delay: 0.5s;
 
-    @include breakpoint(tablet-laptop, max) {
-        max-width: 50vw;
-        align-self: flex-end;
-    }
-    @include breakpoint(tablet, max) {
-        left: 1vw;
-        top: 40vh;
-        max-width: 98vw;
-        overflow-y: auto;
+  @include breakpoint(tablet-laptop, max) {
+    max-width: 50vw;
+    // align-self: flex-end;
+  }
+  @include breakpoint(tablet, max) {
+    left: 1vw;
+    top: 40vh;
+    max-width: 98vw;
+    overflow-y: auto;
 
-        background-color: rgba(36, 36, 36, 0.7);
-    }
+    background-color: rgba(36, 36, 36, 0.7);
+  }
 
-    // Content
-    & > div {
-        animation: fadeIn 1s;
-    }
+  // Content
+  & > div {
+    animation: fadeIn 1s;
+  }
 }
 
 @-webkit-keyframes slide {
-    100% {
-        width: 100vw;
-    }
+  100% {
+    width: 100vw;
+  }
 }
 
 @keyframes slide {
-    100% {
-        width: 100vw;
-    }
+  100% {
+    width: 100vw;
+  }
 }
 
 .closed {
-    animation: slideOut 0.5s forwards;
+  animation: slideOut 0.5s forwards;
 
-    @-webkit-keyframes slideOut {
-        0% {
-            width: 100vw;
-        }
-        100% {
-            width: 0;
-        }
+  @-webkit-keyframes slideOut {
+    0% {
+      width: 100vw;
     }
+    100% {
+      width: 0;
+    }
+  }
 
-    @keyframes slideOut {
-        0% {
-            width: 100vw;
-        }
-        100% {
-            width: 0;
-        }
+  @keyframes slideOut {
+    0% {
+      width: 100vw;
     }
+    100% {
+      width: 0;
+    }
+  }
 }
