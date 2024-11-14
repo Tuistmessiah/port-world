@@ -6,3 +6,5 @@ if ! docker network inspect nginx_network >/dev/null 2>&1; then
 fi
 
 npm run docker:start
+
+docker ps
