@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  port-world:
+    container_name: port-world
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5173:3000"
+    networks:
+      - nginx_network
+
+networks:
+  nginx_network:
+    external: true

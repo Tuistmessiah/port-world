@@ -1,39 +1,31 @@
-# Using a template with React + TypeScript + Vite
+## Description
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### React + TypeScript + Vite (Vercel)
 
-Currently, two official plugins are available:
+This project uses a minimal template with Vite. 
 
--   [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
--   [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Setup
 
-## Expanding the ESLint configuration
+### Local dev 
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+This project uses vite, so running `dev`, `start` or `deploy` should work normally with vite.
 
--   Configure the top-level `parserOptions` property like this:
+To run in a container, simply run `npm run serve`. This will run the shell script `serve.sh`, which will create a docker network, if not present and then script `docker:start`, that will stop (`docker-compose down`) and then build and start the container (`docker-compose up --build -d`).
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+### Serving with docker
 
--   Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
--   Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
--   Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+A simple docker configuration was also added to serve in in a container. Exposed in host at port `5173`. This container is also added to a network that can be used by a containerized nginx. 
 
 ## Styling
 
 To check available google fonts installed: https://fonts.google.com/noto/specimen/Noto+Sans
 
-# License
+## License
 
 MIT License. Be sure to check the dependencies used. Remember, the MIT license applied to this project covers only the code written. It doesn't re-license the dependencies used. Each dependency retains its original license.
 
-# Disclaimer
+## Disclaimer
 
-This project is still in an early stage, providing an MVP for presentation. There wasn't a specific concern in cleaning comments, unused code at this point. Anything you want to suggest or comment I am available at: pedrocaetano90@gmail.com
+This project is still in an early stage, providing an MVP for presentation. There wasn't a specific concern in cleaning comments, unused code at this point. 
+
+Anything you want to suggest or comment I am available at: pedrocaetano90@gmail.com
